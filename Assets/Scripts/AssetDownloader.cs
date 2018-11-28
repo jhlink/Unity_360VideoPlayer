@@ -6,41 +6,50 @@ using UnityFx.Async.Promises;
 // For promises-specific stuff.
 using UnityEngine.Networking;
 using System;
+using System.IO;
 
 public class AssetDownloader : MonoBehaviour
 {
 
-	// Use this for initialization
-	void Start ()
-	{
-		DownloadTextAsync ("http://www.google.com")
-		    .Then (text => Debug.Log (text))
-		    .Catch (e => Debug.LogException (e));	
-	}
-	
-	// Update is called once per frame
-	void Update ()
-	{
-	
-	}
+	private AssetContainer mContainer;
 
-	public IAsyncOperation<string> DownloadTextAsync (string url)
+	public IAsyncOperation<AssetContainer> DownloadVideoAsync (AssetContainer container)
 	{
-		var result = new AsyncCompletionSource<string> ();
-		StartCoroutine (DownloadTextInternal (result, url));
+		mContainer = container;
+
+		var result = new AsyncCompletionSource<AssetContainer> ();
+
+		Debug.Log ("Coroutine: Start DownloadAsyncVideoData");
+
+		StartCoroutine (DownloadVideoInternal (result, mContainer.AssetHttpEndpoint));
 		return result;
 	}
 
-	private IEnumerator DownloadTextInternal (IAsyncCompletionSource<string> op, string url)
+	private void handleVideoByteBlob (byte[] data)
 	{
+		Debug.Log ("Coroutine/Promise/Handler: Begin writing data to file");
+		byte[] _videoBytes = data;
+		string _pathToFile = Path.Combine (Application.persistentDataPath, mContainer.AssignedAssetFiledName);
+		File.WriteAllBytes (_pathToFile, _videoBytes);
+		mContainer.AssetLocalFilePath = _pathToFile;
+
+		Debug.Log ("Coroutine/Promise/Handler: File stored at " + _pathToFile);
+	}
+
+	private IEnumerator DownloadVideoInternal (IAsyncCompletionSource<AssetContainer> op, string url)
+	{
+		Debug.Log ("Coroutine/Promise: Request for Video Data");
+
 		var www = UnityWebRequest.Get (url);
-		yield return www.Send ();
+		yield return www.SendWebRequest ();
 
 		if (www.isNetworkError || www.isHttpError) {
+			Debug.Log ("Coroutine/Promise: Request failed");
 			op.SetException (new Exception (www.error));
 		} else {
-			op.SetResult (www.downloadHandler.text);
+			Debug.Log ("Coroutine/Promise: Request succeeded");
+			handleVideoByteBlob (www.downloadHandler.data);
+			op.SetResult (mContainer);
 		}
 	}
 }
-
