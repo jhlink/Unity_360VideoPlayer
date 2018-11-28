@@ -4,10 +4,12 @@ using System.IO;
 
 public class AssetContainer
 {
-
 	private string mAssetHttpEndpoint = "";
-	private string mAssetAssignedFileName = "fileBlob.txt";
 	private string mAssetLocalFilePath = "";
+
+  //  This is a default string name if no mAssetLocalFilePath is provided. 
+  //    Default behavior will be overwritting the existing fileBlob
+	private string mAssetAssignedFileName = "dataBlob";
 
 	public AssetContainer ()
 	{
@@ -54,6 +56,7 @@ public class AssetContainer
 		if (doesFileExistLocally ()) {
 			File.Delete (Application.persistentDataPath + mAssetAssignedFileName);
 		  Debug.Log("Delete: File deleted");	
+
 			// Is this necessary? ... We'll check it eventually.
 			Application.Quit ();
 		} else {
