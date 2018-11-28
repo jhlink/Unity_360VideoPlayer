@@ -19,7 +19,6 @@ public class VideoPl : MonoBehaviour
 	internal UnityEngine.Video.VideoPlayer myVideoPlayer;
 	string videoUrl = "https://bitbucket.org/jhlink/story_static_host/raw/9353308e7c994be2ed6187b78125a906d60c824b/Videos/ch0_intro/intro_p1.mp4";
 
-
 	private void downloadData ()
 	{
 		string fileName = "intro.mp4";
@@ -28,7 +27,12 @@ public class VideoPl : MonoBehaviour
 			.Then (resultContainer => {
 			Debug.Log (resultContainer.AssetLocalFilePath);
 		})
-			.Catch (e => Debug.LogException (e));	
+			.Catch<System.OperationCanceledException> (e => {
+			Debug.Log (e);
+		})	
+			.Catch (e => {
+			Debug.LogException (e);
+		});	
 	}
 
 	private IEnumerator loadVideoFromThisURL (string _url)

@@ -17,10 +17,15 @@ public class AssetDownloader : MonoBehaviour
 		mContainer = container;
 
 		var result = new AsyncCompletionSource<AssetContainer> ();
+			
+		if (mContainer.doesFileExistLocally ()) {
+			Debug.Log ("AssetDownloader: File already exists.");
+			result.SetCanceled ();
+		} else {
+			Debug.Log ("Coroutine: Start DownloadAsyncVideoData");
+			StartCoroutine (DownloadVideoInternal (result, mContainer.AssetHttpEndpoint));
+		}
 
-		Debug.Log ("Coroutine: Start DownloadAsyncVideoData");
-
-		StartCoroutine (DownloadVideoInternal (result, mContainer.AssetHttpEndpoint));
 		return result;
 	}
 
