@@ -1,0 +1,8 @@
+.DS_Store
+obj/
+Temp/
+*.apk
+*.csproj 
+*.sln
+Library/
+UnityPackageManager/
