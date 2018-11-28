@@ -6,3 +6,4 @@ Temp/
 *.sln
 Library/
 UnityPackageManager/
+*.userprefs
