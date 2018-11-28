@@ -7,8 +7,8 @@ public class AssetContainer
 	private string mAssetHttpEndpoint = "";
 	private string mAssetLocalFilePath = "";
 
-  //  This is a default string name if no mAssetLocalFilePath is provided. 
-  //    Default behavior will be overwritting the existing fileBlob
+	//  This is a default string name if no mAssetLocalFilePath is provided.
+	//    Default behavior will be overwritting the existing fileBlob
 	private string mAssetAssignedFileName = "dataBlob";
 
 	public AssetContainer ()
@@ -55,19 +55,22 @@ public class AssetContainer
 	{
 		if (doesFileExistLocally ()) {
 			File.Delete (Application.persistentDataPath + mAssetAssignedFileName);
-		  Debug.Log("Delete: File deleted");	
+			Debug.Log ("Delete: File deleted");	
 
 			// Is this necessary? ... We'll check it eventually.
 			Application.Quit ();
 		} else {
-		  Debug.Log("Delete: Unneeded - File does not exist");	
+			Debug.Log ("Delete: Unneeded - File does not exist");	
 		}
 	}
 
-	public bool doesFileExistLocally() {
-		bool result = File.Exists (Application.persistentDataPath + mAssetAssignedFileName);
+	public bool doesFileExistLocally ()
+	{
+		string persistentFilePath = Application.persistentDataPath + "/" + mAssetAssignedFileName;
+		bool result = File.Exists (persistentFilePath);
+
 		String fileCheckString = " - Exists Locally: " + result;
-    String verifyFileExists = "Verify: File " + mAssetAssignedFileName + fileCheckString;
+		String verifyFileExists = "Verify: File " + mAssetAssignedFileName + fileCheckString;
 
 		Debug.Log (verifyFileExists);
 
