@@ -10,7 +10,6 @@ using System.IO;
 
 public class AssetDownloader : MonoBehaviour
 {
-
 	private AssetContainer mContainer;
 
 	public IAsyncOperation<AssetContainer> DownloadVideoAsync (AssetContainer container)

@@ -3,18 +3,33 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using System.IO;
+using UnityFx.Async.Promises;
 
 public class VideoPl : MonoBehaviour
 {
+	public AssetDownloader downloader;
 
 	private void Start ()
 	{
-		StartCoroutine (this.loadVideoFromThisURL (videoUrl));
+		downloadData ();
+		//StartCoroutine (this.loadVideoFromThisURL (videoUrl));
 	}
 
 	[SerializeField]
 	internal UnityEngine.Video.VideoPlayer myVideoPlayer;
-	string videoUrl = "some_url";
+	string videoUrl = "https://bitbucket.org/jhlink/story_static_host/raw/9353308e7c994be2ed6187b78125a906d60c824b/Videos/ch0_intro/intro_p1.mp4";
+
+
+	private void downloadData ()
+	{
+		string fileName = "intro.mp4";
+		AssetContainer container = new AssetContainer (videoUrl, fileName);
+		downloader.DownloadVideoAsync (container)
+			.Then (resultContainer => {
+			Debug.Log (resultContainer.AssetLocalFilePath);
+		})
+			.Catch (e => Debug.LogException (e));	
+	}
 
 	private IEnumerator loadVideoFromThisURL (string _url)
 	{
