@@ -7,10 +7,11 @@ public class VideoCollectionManager : MonoBehaviour
 	public string[] videoID;
 	public string[] videoUrls;
 
-	private Dictionary<string, string> videoStringMap;
+	private Dictionary<string, string> videoStringMap = new Dictionary<string, string>();
 
 	private void Start() {
-		assertVideoArrayConditions ();
+		assertVideoArrayConditions();
+		initializeDictionary();
 	}
 
 	private void assertVideoArrayConditions() {
@@ -18,7 +19,8 @@ public class VideoCollectionManager : MonoBehaviour
 		Assert.AreEqual(videoUrls.Length, videoID.Length);
 	}
 
-	private void initializeDictionary() {
+	public void initializeDictionary() {
+		assertVideoArrayConditions ();
 		if (videoStringMap.Count > 0) {
 			return;
 		}
