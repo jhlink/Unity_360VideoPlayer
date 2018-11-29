@@ -5,7 +5,7 @@ using UnityEngine.Networking;
 using System.IO;
 using UnityFx.Async.Promises;
 
-public class VideoPl : MonoBehaviour
+public class MasterPlayerController : MonoBehaviour
 {
 	public AssetDownloader downloader;
 	public VideoCollectionManager manager;
