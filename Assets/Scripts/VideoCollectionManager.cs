@@ -34,5 +34,14 @@ public class VideoCollectionManager : MonoBehaviour
 			}
 		}
 	}
-}
 
+	public string getUrlWithKey(string key) {
+		string urlStringHolder = "";
+		if ( videoStringMap.TryGetValue(key, out urlStringHolder) ) {
+			Debug.Log("Manager: Found " + key + " at URL " + urlStringHolder);
+		} else {
+			Debug.Log("Manager: Value for " + key + " not found");
+		}
+		return urlStringHolder;
+	}
+}
