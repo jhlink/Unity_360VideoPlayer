@@ -40,6 +40,11 @@ public class MasterPlayerController : MonoBehaviour
 		});	
 	}
 
+	public void playVideo() {
+		Debug.Log("Playing video : " + resultContainer.AssignedAssetFiledName);
+		playerConfigurator.playVideo(this.gameObject, resultContainer.AssetLocalFilePath);
+	}
+
 	private void initializeComponents() {
 		this.gameObject.AddComponent<AudioSource>();
 		playerConfigurator = new PlayerConfigurator();
@@ -48,8 +53,5 @@ public class MasterPlayerController : MonoBehaviour
 		}
 	}
 
-	private void playVideo() {
-			playerConfigurator.playVideo(this.gameObject, resultContainer.AssetLocalFilePath);
-	}
 
 }
