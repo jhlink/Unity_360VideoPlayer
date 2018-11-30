@@ -10,6 +10,7 @@ public class AssetContainer
 	//  This is a default string name if no mAssetLocalFilePath is provided.
 	//    Default behavior will be overwritting the existing fileBlob
 	private string mAssetAssignedFileName = "dataBlob";
+	private string mAssetFileType = ".mp4";
 
 	public AssetContainer ()
 	{
@@ -31,10 +32,15 @@ public class AssetContainer
 		}
 	}
 
-	public string toString() {
-		string fileNameAtLocalPath = "File: " + mAssetAssignedFileName + " at path: " + mAssetLocalFilePath;
-		string fileEndPointString = " - URL: " + mAssetHttpEndpoint;
-		return fileNameAtLocalPath + fileEndPointString;
+	public string AssetFileType { 
+		get {
+			return mAssetFileType;
+		}
+
+		set { 
+			mAssetFileType = value;	
+		}
+
 	}
 
 	public string AssignedAssetFiledName { 
@@ -68,6 +74,12 @@ public class AssetContainer
 		} else {
 			Debug.Log ("Delete: Unneeded - File does not exist");	
 		}
+	}
+
+	public string toString() {
+		string fileNameAtLocalPath = "File: " + mAssetAssignedFileName + " at path: " + mAssetLocalFilePath;
+		string fileEndPointString = "\n - URL: " + mAssetHttpEndpoint;
+		return fileNameAtLocalPath + fileEndPointString;
 	}
 
 	private bool checkIfFileExistInStreamingAssetsPath(string fileName) {
