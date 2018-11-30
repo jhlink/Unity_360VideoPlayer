@@ -14,10 +14,7 @@ public class PlayerConfigurator
   public void playVideo(GameObject playerContainer, string _url)
   {
     extractPlayerComponents(playerContainer);
-
-    var mesh = playerContainer.GetComponent<MeshFilter>().mesh;
-    invertNormals(mesh);
-    setColor(playerContainer.GetComponent<Renderer>());
+    configureGameObjectFor360Content(playerContainer);
 
     videoPlayer.prepareCompleted += prepareCompleted;
     videoPlayer.source = UnityEngine.Video.VideoSource.Url;
@@ -33,10 +30,16 @@ public class PlayerConfigurator
     source.volume = 1.0f;
 
     videoPlayer.url = _url;
-
     videoPlayer.Prepare();
   }
 
+//  Summary: Configures the GameObject for displaying 360 video content appropriately
+//    via invertNormals and applying appropriate unlit texture via setUnlitTexture.
+  private void configureGameObjectFor360Content(GameObject mPlayerContainer) {
+    var mesh = mPlayerContainer.GetComponent<MeshFilter>().mesh;
+    invertNormals(mesh);
+    setUnlitTexture(mPlayerContainer.GetComponent<Renderer>());
+  }
 
 // Summary: Helper method that extract AudioSource and VideoPlayer
 //  GameObjects to be configured for 360 video playback.
@@ -54,7 +57,7 @@ public class PlayerConfigurator
 
 // Summary: Ensure that project video on Sphere ( GameObject ) 
 //  ignores any in-game lighting effects using Unlit/Texture as base.
-  void setColor(Renderer renderer)
+  void setUnlitTexture(Renderer renderer)
   {
     Texture2D tex = new Texture2D(1, 1);
     tex.SetPixel(0, 0, Color.clear);
