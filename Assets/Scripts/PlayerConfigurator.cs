@@ -46,6 +46,8 @@ public class PlayerConfigurator
     Debug.Log("Video should play");
   }
 
+// Summary: Ensure that project video on Sphere ( GameObject ) 
+//  ignores any in-game lighting effects using Unlit/Texture as base.
   void SetColor(Renderer renderer)
   {
     Texture2D tex = new Texture2D(1, 1);
