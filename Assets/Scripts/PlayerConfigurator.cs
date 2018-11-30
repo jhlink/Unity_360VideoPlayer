@@ -17,7 +17,7 @@ public class PlayerConfigurator
 
     var mesh = playerContainer.GetComponent<MeshFilter>().mesh;
     invertNormals(mesh);
-    SetColor(playerContainer.GetComponent<Renderer>());
+    setColor(playerContainer.GetComponent<Renderer>());
 
     videoPlayer.prepareCompleted += prepareCompleted;
     videoPlayer.source = UnityEngine.Video.VideoSource.Url;
