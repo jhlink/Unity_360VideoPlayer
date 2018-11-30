@@ -70,13 +70,33 @@ public class AssetContainer
 		}
 	}
 
+	private bool checkIfFileExistInStreamingAssetsPath(string fileName) {
+		bool result = false;
+
+		DirectoryInfo directoryInfo = new DirectoryInfo(Application.streamingAssetsPath);
+		Debug.Log("Streaming Assets Path: " + Application.streamingAssetsPath);
+		FileInfo[] allFiles = directoryInfo.GetFiles("*.*");
+
+		foreach (FileInfo f in allFiles) {
+			if ( f.Name.Contains(fileName) ) {
+				result = true;
+				//mAssetLocalFilePath = f.FullName;
+			}
+			Debug.Log("StreamingAssets/" + f.FullName);
+		}
+
+		return result;
+	}
+
 	public bool doesFileExistLocally ()
 	{
-		string persistentFilePath = Application.persistentDataPath + "/" + mAssetAssignedFileName;
-		bool result = File.Exists (persistentFilePath);
+		//string persistentFilePath = Application.streamingAssetsPath + "/" + mAssetAssignedFileName;
+		//bool result = File.Exists (persistentFilePath);
+		bool result = checkIfFileExistInStreamingAssetsPath(mAssetAssignedFileName);
 
 		if ( result ) { 
-			mAssetLocalFilePath = Path.Combine(Application.persistentDataPath,  	Path.GetFileName(persistentFilePath));
+			mAssetLocalFilePath = Path.Combine(Application.streamingAssetsPath, 	mAssetAssignedFileName);
+			Debug.Log( " Evaled Path: " + mAssetLocalFilePath);
 		} else {
 			Debug.Log("Is it really not found? Check the VideoID list and verify that the file ID is terminated with a file extension. Hacky? Absolutely.");
 		}

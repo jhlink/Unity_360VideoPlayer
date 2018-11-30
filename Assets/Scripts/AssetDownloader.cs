@@ -37,7 +37,7 @@ public class AssetDownloader : MonoBehaviour
 		// Explore: Instead of PersistentDataPath, StreamingAssetPath could be used, but
 		//	for lack of time and out of caution, opted to to use persistentDataPath until further
 		//	notice.
-		string _pathToFile = Path.Combine (Application.persistentDataPath, mContainer.AssignedAssetFiledName);
+		string _pathToFile = Path.Combine (Application.streamingAssetsPath, mContainer.AssignedAssetFiledName);
 		File.WriteAllBytes (_pathToFile, _videoBytes);
 		mContainer.AssetLocalFilePath = _pathToFile;
 
