@@ -7,7 +7,7 @@ public class VideoCollectionManager : MonoBehaviour
 	public string[] videoID;
 	public string[] videoUrls;
 
-	private Dictionary<string, string> videoStringMap = new Dictionary<string, string>();
+	private Dictionary<string, AssetContainer> videoStringMap = new Dictionary<string, AssetContainer>();
 
 	private void Start() {
 		assertVideoArrayConditions();
@@ -33,23 +33,24 @@ public class VideoCollectionManager : MonoBehaviour
 
 		if (videoID.Length == videoUrls.Length) {
 			for (int i = 0; i < videoID.Length; i++) {
-				string videoIdItem = videoID[ i ];
+				string videoFileName = videoID[ i ];
 				string videoUrlItem = videoUrls[ i ];
 
-				videoStringMap.Add (videoIdItem, videoUrlItem);
+				AssetContainer assetContainer = new AssetContainer(videoUrlItem, videoFileName);
+				videoStringMap.Add (videoFileName, assetContainer);
 
-				Debug.Log("Manager: " + videoIdItem + " at URL " + videoStringMap[videoIdItem] );
+				Debug.Log("Manager: " + videoFileName + " at URL " + videoStringMap[videoFileName] );
 			}
 		}
 	}
 
-	public string getUrlWithKey(string key) {
-		string urlStringHolder = "";
-		if ( videoStringMap.TryGetValue(key, out urlStringHolder) ) {
-			Debug.Log("Manager: Found " + key + " at URL " + urlStringHolder);
+	public AssetContainer getContainerWithKey(string key) {
+		AssetContainer videoContainer = new AssetContainer();
+		if ( videoStringMap.TryGetValue(key, out videoContainer) ) {
+			Debug.Log("Manager: Found " + key + " at Container:\n" + videoContainer.toString());
 		} else {
 			Debug.Log("Manager: Value for " + key + " not found");
 		}
-		return urlStringHolder;
+		return videoContainer;
 	}
 }

@@ -10,6 +10,7 @@ public class MasterPlayerController : MonoBehaviour
 	public AssetDownloader downloader;
 	public VideoCollectionManager manager;
 
+	private AssetContainer resultContainer;
 
 	private void Start ()
 	{
@@ -23,12 +24,11 @@ public class MasterPlayerController : MonoBehaviour
 	{
 		manager.initialize(false);
 		string videoKey = "intro_p1.mp4";
-		string videoUrl = manager.getUrlWithKey(videoKey);
+		resultContainer = manager.getContainerWithKey(videoKey);
 
 		AudioSource vAudio = this.gameObject.AddComponent<AudioSource>();
 
-		AssetContainer container = new AssetContainer (videoUrl, videoKey);
-		downloader.DownloadVideoAsync (container)
+		downloader.DownloadVideoAsync (resultContainer)
 			.Then (resultContainer => {
 			Debug.Log (resultContainer.AssetLocalFilePath);
 			PlayerConfigurator playerConfigurator = new PlayerConfigurator();
@@ -37,7 +37,7 @@ public class MasterPlayerController : MonoBehaviour
 			.Catch<System.OperationCanceledException> (e => {
 			Debug.Log (e);
 			PlayerConfigurator playerConfigurator = new PlayerConfigurator();
-			playerConfigurator.playVideo(this.gameObject, container.AssetLocalFilePath );
+			playerConfigurator.playVideo(this.gameObject, resultContainer.AssetLocalFilePath );
 		})	
 			.Catch (e => {
 			Debug.LogException (e);
