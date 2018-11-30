@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using System.IO;
 using UnityFx.Async.Promises;
+using UnityEngine.Video;
 
 public class MasterPlayerController : MonoBehaviour
 {
@@ -11,41 +12,44 @@ public class MasterPlayerController : MonoBehaviour
 	public VideoCollectionManager manager;
 
 	private AssetContainer resultContainer;
+	private PlayerConfigurator playerConfigurator;
 
 	private void Start ()
 	{
 		manager.initialize();
-		initialize();
+		initializeComponents();
 	}
 
 	[SerializeField]
-	internal UnityEngine.Video.VideoPlayer myVideoPlayer;
+	internal VideoPlayer myVideoPlayer;
 
-	public void initializePlayerForVideo(string videoName) {
+	public void downloadVideo(string videoName) {
 		resultContainer = manager.getContainerWithKey(videoName);
 
 		downloader.DownloadVideoAsync (resultContainer)
-			.Then (resultContainer => {
+			.Then ( mContainer => {
+			resultContainer = mContainer;
 			Debug.Log (resultContainer.AssetLocalFilePath);
-			PlayerConfigurator playerConfigurator = new PlayerConfigurator();
-			playerConfigurator.playVideo(this.gameObject, resultContainer.AssetLocalFilePath);
 		})
 			.Catch<System.OperationCanceledException> (e => {
 			Debug.Log (e);
-			PlayerConfigurator playerConfigurator = new PlayerConfigurator();
-			playerConfigurator.playVideo(this.gameObject, resultContainer.AssetLocalFilePath );
+			Debug.Log (resultContainer.AssetLocalFilePath);
 		})	
 			.Catch (e => {
 			Debug.LogException (e);
 		});	
 	}
 
-	private void initialize() {
+	private void initializeComponents() {
 		this.gameObject.AddComponent<AudioSource>();
+		playerConfigurator = new PlayerConfigurator();
+		if ( myVideoPlayer == null) {
+			myVideoPlayer = this.gameObject.AddComponent<VideoPlayer>();
+		}
 	}
 
 	private void playVideo() {
-
+			playerConfigurator.playVideo(this.gameObject, resultContainer.AssetLocalFilePath);
 	}
 
 }
