@@ -35,7 +35,10 @@ public class AssetDownloader : MonoBehaviour
 		byte[] _videoBytes = data;
 
 		string _pathToFile = Path.Combine (Application.streamingAssetsPath, mContainer.AssignedAssetFiledName + mContainer.AssetFileType);
-		File.WriteAllBytes (Application.streamingAssetsPath, _videoBytes);
+
+		mContainer.AssetLocalFilePath = _pathToFile;
+
+		File.WriteAllBytes (_pathToFile, _videoBytes);
 		Debug.Log ("Coroutine/Promise/Handler: File stored at " + _pathToFile);
 	}
 
