@@ -23,7 +23,7 @@ public class MasterPlayerController : MonoBehaviour
 	[SerializeField]
 	internal VideoPlayer myVideoPlayer;
 
-	public void downloadVideo(string videoName) {
+	public void loadVideo(string videoName) {
 		resultContainer = manager.getContainerWithKey(videoName);
 
 		downloader.DownloadVideoAsync (resultContainer)
