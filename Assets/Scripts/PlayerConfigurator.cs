@@ -17,6 +17,8 @@ public class PlayerConfigurator
     configureGameObjectFor360Content(playerContainer);
     prepareVideoPlayer(_url);
 
+    // Utilizing callbacks due to more reliable performance in comparison to
+    //  Coroutines, which seem to be less so. 
     videoPlayer.prepareCompleted += prepareCompleted;
   }
 
