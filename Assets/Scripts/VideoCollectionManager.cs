@@ -19,6 +19,12 @@ public class VideoCollectionManager : MonoBehaviour
 		Assert.AreEqual(videoUrls.Length, videoID.Length);
 	}
 
+	public void initialize(bool ready) {
+		Debug.Log("Initializing");
+		initializeDictionary();
+		Debug.Log("Completed initialization");
+	}
+
 	public void initializeDictionary() {
 		assertVideoArrayConditions ();
 		if (videoStringMap.Count > 0) {
