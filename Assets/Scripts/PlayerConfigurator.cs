@@ -41,6 +41,8 @@ public class PlayerConfigurator
     videoPlayer.Prepare();
   }
 
+// Summary: Event handler called when video player has finished
+//  preparing resources to play content.
   private void prepareCompleted(VideoPlayer vp ) {
     vp.Play();
     Debug.Log("Video should play");
