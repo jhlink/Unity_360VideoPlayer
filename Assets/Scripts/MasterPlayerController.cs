@@ -14,19 +14,15 @@ public class MasterPlayerController : MonoBehaviour
 
 	private void Start ()
 	{
-		downloadData ();
+		manager.initialize();
+		initialize();
 	}
 
 	[SerializeField]
 	internal UnityEngine.Video.VideoPlayer myVideoPlayer;
 
-	private void downloadData ()
-	{
-		manager.initialize(false);
-		string videoKey = "intro_p1.mp4";
-		resultContainer = manager.getContainerWithKey(videoKey);
-
-		AudioSource vAudio = this.gameObject.AddComponent<AudioSource>();
+	public void initializePlayerForVideo(string videoName) {
+		resultContainer = manager.getContainerWithKey(videoName);
 
 		downloader.DownloadVideoAsync (resultContainer)
 			.Then (resultContainer => {
@@ -42,6 +38,10 @@ public class MasterPlayerController : MonoBehaviour
 			.Catch (e => {
 			Debug.LogException (e);
 		});	
+	}
+
+	private void initialize() {
+		this.gameObject.AddComponent<AudioSource>();
 	}
 
 	private void playVideo() {

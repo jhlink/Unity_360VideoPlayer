@@ -19,7 +19,7 @@ public class VideoCollectionManager : MonoBehaviour
 		Assert.AreEqual(videoUrls.Length, videoID.Length);
 	}
 
-	public void initialize(bool ready) {
+	public void initialize() {
 		Debug.Log("Initializing");
 		initializeDictionary();
 		Debug.Log("Completed initialization");
