@@ -33,6 +33,10 @@ public class AssetDownloader : MonoBehaviour
 	{
 		Debug.Log ("Coroutine/Promise/Handler: Begin writing data to file");
 		byte[] _videoBytes = data;
+
+		// Explore: Instead of PersistentDataPath, StreamingAssetPath could be used, but
+		//	for lack of time and out of caution, opted to to use persistentDataPath until further
+		//	notice.
 		string _pathToFile = Path.Combine (Application.persistentDataPath, mContainer.AssignedAssetFiledName);
 		File.WriteAllBytes (_pathToFile, _videoBytes);
 		mContainer.AssetLocalFilePath = _pathToFile;
