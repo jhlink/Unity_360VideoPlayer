@@ -16,6 +16,22 @@ public class PlayerConfigurator
     extractPlayerComponents(playerContainer);
     configureGameObjectFor360Content(playerContainer);
 
+    // Note: The sequence in video player is STRICT. It is inferred from 
+    //  plmx's response that deviation from the stated video player configuration
+    //  will result in unexpected behaviour.  
+    //  Source: https://forum.unity.com/threads/video-player-is-not-playing-audio.486924/#post-3532904
+    //  
+    //  This sequence seems to be the following:
+    //  - Establish VideoPlayer Source Type -- URL or VideoClip
+    //  - Establish VideoPlayer AudioSource Mode -- None, Direct, AudioSource
+    //    - Note: From research across forums, Direct seems to be the most unreliable
+    //      and problematic. My guess is that Direct mode can be used to achieve performance
+    //      gains at the cost of Unity audio configurations. Here, robustness is prioritized
+    //      over performance, as such AudioSource will be the mode of choice here. 
+    //  - Specify controlledAudioTrackCount in VideoPlayer 
+    //  - Enable desired tracks via EnableAudioTrack
+    //  - Assign targetAudioSource to VideoPlayer via SetTargetAudioSource
+    //  - [ Final Step ] Assign URL to play in VideoPlayer
     videoPlayer.prepareCompleted += prepareCompleted;
     videoPlayer.source = UnityEngine.Video.VideoSource.Url;
     videoPlayer.audioOutputMode = UnityEngine.Video.VideoAudioOutputMode.AudioSource;
