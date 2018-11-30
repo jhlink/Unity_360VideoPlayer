@@ -15,7 +15,13 @@ public class PlayerConfigurator
   {
     extractPlayerComponents(playerContainer);
     configureGameObjectFor360Content(playerContainer);
+    prepareVideoPlayer(_url);
 
+    videoPlayer.prepareCompleted += prepareCompleted;
+  }
+
+  // Summary: Configure video source and audio settings and prepare video player for playback. 
+  private void prepareVideoPlayer(string _url) {
     // Note: The sequence in video player is STRICT. It is inferred from 
     //  plmx's response that deviation from the stated video player configuration
     //  will result in unexpected behaviour.  
@@ -32,15 +38,18 @@ public class PlayerConfigurator
     //  - Enable desired tracks via EnableAudioTrack
     //  - Assign targetAudioSource to VideoPlayer via SetTargetAudioSource
     //  - [ Final Step ] Assign URL to play in VideoPlayer
-    videoPlayer.prepareCompleted += prepareCompleted;
+
     videoPlayer.source = UnityEngine.Video.VideoSource.Url;
     videoPlayer.audioOutputMode = UnityEngine.Video.VideoAudioOutputMode.AudioSource;
     videoPlayer.controlledAudioTrackCount = 1;
 
     videoPlayer.waitForFirstFrame = true;
-    videoPlayer.playOnAwake = false;
+    //  Note: playOnAwake is disabled in that the VideoPlayer may immediately start
+    //    playback as soon as the URL is assigned. Although skeptical whether this has any
+    //    real detrimental effects in other use cases, better safe than sorry. 
+    videoPlayer.playOnAwake = true;
     source.playOnAwake = false;
-
+    
     videoPlayer.EnableAudioTrack(0, true);
     videoPlayer.SetTargetAudioSource(0, source);
     source.volume = 1.0f;
