@@ -69,6 +69,10 @@ public class AssetContainer
 		string persistentFilePath = Application.persistentDataPath + "/" + mAssetAssignedFileName;
 		bool result = File.Exists (persistentFilePath);
 
+		if ( result ) { 
+			mAssetLocalFilePath = Path.Combine(Application.persistentDataPath,  	Path.GetFileName(persistentFilePath));
+		}
+
 		String fileCheckString = " - Exists Locally: " + result;
 		String verifyFileExists = "Verify: File " + mAssetAssignedFileName + fileCheckString;
 
