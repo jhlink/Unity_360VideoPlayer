@@ -31,6 +31,12 @@ public class AssetContainer
 		}
 	}
 
+	public string toString() {
+		string fileNameAtLocalPath = "File: " + mAssetAssignedFileName + " at path: " + mAssetLocalFilePath;
+		string fileEndPointString = " - URL: " + mAssetHttpEndpoint;
+		return fileNameAtLocalPath + fileEndPointString;
+	}
+
 	public string AssignedAssetFiledName { 
 		get {
 			return mAssetAssignedFileName;
