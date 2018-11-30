@@ -7,3 +7,4 @@ Temp/
 Library/
 UnityPackageManager/
 *.userprefs
+Assets/StreamingAssets/*
