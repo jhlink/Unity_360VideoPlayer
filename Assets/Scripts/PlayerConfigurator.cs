@@ -48,7 +48,7 @@ public class PlayerConfigurator
 
 // Summary: Ensure that project video on Sphere ( GameObject ) 
 //  ignores any in-game lighting effects using Unlit/Texture as base.
-  void SetColor(Renderer renderer)
+  void setColor(Renderer renderer)
   {
     Texture2D tex = new Texture2D(1, 1);
     tex.SetPixel(0, 0, Color.clear);
