@@ -9,25 +9,32 @@ public class PlayerConfigurator
 {
 
   private AudioSource source; 
+  private VideoPlayer videoPlayer;
+  private void extractPlayerComponents(GameObject playerContainer) {
+    source = playerContainer.GetComponent<AudioSource>();
+    videoPlayer = playerContainer.GetComponent<VideoPlayer>();
+  }
 
-  public void playVideo(VideoPlayer videoPlayer, AudioSource vAudio, GameObject playerContainer, string _url)
+  public void playVideo(GameObject playerContainer, string _url)
   {
+    extractPlayerComponents(playerContainer);
+
     var mesh = playerContainer.GetComponent<MeshFilter>().mesh;
     invertNormals(mesh);
     SetColor(playerContainer.GetComponent<Renderer>());
-    videoPlayer.prepareCompleted += prepareCompleted;
 
+    videoPlayer.prepareCompleted += prepareCompleted;
     videoPlayer.source = UnityEngine.Video.VideoSource.Url;
     videoPlayer.audioOutputMode = UnityEngine.Video.VideoAudioOutputMode.AudioSource;
     videoPlayer.controlledAudioTrackCount = 1;
 
     videoPlayer.waitForFirstFrame = true;
     videoPlayer.playOnAwake = false;
-    vAudio.playOnAwake = false;
+    source.playOnAwake = false;
 
     videoPlayer.EnableAudioTrack(0, true);
-    videoPlayer.SetTargetAudioSource(0, vAudio);
-    vAudio.volume = 1.0f;
+    videoPlayer.SetTargetAudioSource(0, source);
+    source.volume = 1.0f;
 
     videoPlayer.url = _url;
 
@@ -38,9 +45,6 @@ public class PlayerConfigurator
     vp.Play();
     if ( vp.GetTargetAudioSource(0).isActiveAndEnabled ) {
         Debug.Log("Audio is actived and enabled");
-    }
-    if ( vp.GetTargetAudioSource(0).isPlaying ) {
-        Debug.Log("Audio is playing");
     }
     Debug.Log("Video should play");
   }
