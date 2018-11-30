@@ -350,11 +350,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   videoID:
-  - intro_p1.mp4
-  - intro_p2.mp4
+  - sample.mp4
   videoUrls:
-  - https://bitbucket.org/jhlink/story_static_host/raw/9353308e7c994be2ed6187b78125a906d60c824b/Videos/ch0_intro/intro_p1.mp4
-  - https://bitbucket.org/jhlink/story_static_host/raw/9353308e7c994be2ed6187b78125a906d60c824b/Videos/ch0_intro/intro_p2.mp4
+  - https://github.com/jhlink/Unity_360VideoPlayer/blob/static_files/static_files/sample-360-video.mp4?raw=true
 --- !u!1 &1555315053
 GameObject:
   m_ObjectHideFlags: 0
