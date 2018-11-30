@@ -36,6 +36,14 @@ public class PlayerConfigurator
 //  Summary: Configures the GameObject for displaying 360 video content appropriately
 //    via invertNormals and applying appropriate unlit texture via setUnlitTexture.
   private void configureGameObjectFor360Content(GameObject mPlayerContainer) {
+    // Note: Mesh is used as opposed to sharedMesh for the following reasons.
+    //  - Instantiates a new mesh based on object and provides a reference to this
+    //    instantiation and future .mesh property calls. 
+    //    -- SharedMesh affects all objects that use mesh reference, which can be
+    //    computationally expensive on mobile platforms. 
+    //    -- Basic idea: Modify a copy and apply changes only to objects that need it. 
+    //  Information concerning Mesh vs. Shared mesh can found here. (Kudos to Gambit-MSplitz) 
+    //    https://forum.unity.com/threads/video-player-is-not-playing-audio.486924/#post-3532904
     var mesh = mPlayerContainer.GetComponent<MeshFilter>().mesh;
     invertNormals(mesh);
     setUnlitTexture(mPlayerContainer.GetComponent<Renderer>());
