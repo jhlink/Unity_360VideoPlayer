@@ -71,6 +71,8 @@ public class AssetContainer
 
 		if ( result ) { 
 			mAssetLocalFilePath = Path.Combine(Application.persistentDataPath,  	Path.GetFileName(persistentFilePath));
+		} else {
+			Debug.Log("Is it really not found? Check the VideoID list and verify that the file ID is terminated with a file extension. Hacky? Absolutely.");
 		}
 
 		String fileCheckString = " - Exists Locally: " + result;
