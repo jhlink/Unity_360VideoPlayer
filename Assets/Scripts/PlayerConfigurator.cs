@@ -43,9 +43,6 @@ public class PlayerConfigurator
 
   private void prepareCompleted(VideoPlayer vp ) {
     vp.Play();
-    if ( vp.GetTargetAudioSource(0).isActiveAndEnabled ) {
-        Debug.Log("Audio is actived and enabled");
-    }
     Debug.Log("Video should play");
   }
 
@@ -59,6 +56,8 @@ public class PlayerConfigurator
     renderer.material.mainTexture = tex;
   }
 
+// Summary: Invert normals of mesh within Sphere ( GameObject ) 
+//  to display video on inner geometric surface.
   private void invertNormals(Mesh mesh)
   {
         // Based on ReverseNormals.cs from Joachim Ante here : http://wiki.unity3d.com/index.php/ReverseNormals
