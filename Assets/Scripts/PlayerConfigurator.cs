@@ -10,10 +10,6 @@ public class PlayerConfigurator
 
   private AudioSource source; 
   private VideoPlayer videoPlayer;
-  private void extractPlayerComponents(GameObject playerContainer) {
-    source = playerContainer.GetComponent<AudioSource>();
-    videoPlayer = playerContainer.GetComponent<VideoPlayer>();
-  }
 
   public void playVideo(GameObject playerContainer, string _url)
   {
@@ -39,6 +35,14 @@ public class PlayerConfigurator
     videoPlayer.url = _url;
 
     videoPlayer.Prepare();
+  }
+
+
+// Summary: Helper method that extract AudioSource and VideoPlayer
+//  GameObjects to be configured for 360 video playback.
+  private void extractPlayerComponents(GameObject playerContainer) {
+    source = playerContainer.GetComponent<AudioSource>();
+    videoPlayer = playerContainer.GetComponent<VideoPlayer>();
   }
 
 // Summary: Event handler called when video player has finished
