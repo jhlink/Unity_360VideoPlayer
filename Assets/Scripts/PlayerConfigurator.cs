@@ -11,10 +11,14 @@ public class PlayerConfigurator
   private AudioSource source; 
   private VideoPlayer videoPlayer;
 
+  public void configureVideoPlayer(GameObject playerContainer) {
+    extractPlayerComponents(playerContainer);
+    configureGameObjectFor360Content(playerContainer);
+  }
+
   public void playVideo(GameObject playerContainer, string _url)
   {
     extractPlayerComponents(playerContainer);
-    configureGameObjectFor360Content(playerContainer);
     prepareVideoPlayer(_url);
 
     // Utilizing callbacks due to more reliable performance in comparison to
