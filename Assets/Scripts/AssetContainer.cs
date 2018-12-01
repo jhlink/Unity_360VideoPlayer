@@ -76,25 +76,29 @@ public class AssetContainer
 		}
 	}
 
-	public string toString() {
+	public string debugString() {
 		string fileNameAtLocalPath = "File: " + mAssetAssignedFileName + " at path: " + mAssetLocalFilePath;
 		string fileEndPointString = "\n - URL: " + mAssetHttpEndpoint;
 		return fileNameAtLocalPath + fileEndPointString;
 	}
 
-	private bool checkIfFileExistInStreamingAssetsPath(string fileName) {
+	private bool checkIfFileExistInPersistentAssetsPath(string fileName) {
 		bool result = false;
 
-		DirectoryInfo directoryInfo = new DirectoryInfo(Application.streamingAssetsPath);
+		// PersistentDataPath is used instead of streamingDataPath because the latter is
+		//	readonly.  
+		DirectoryInfo directoryInfo = new DirectoryInfo(Application.persistentDataPath);
 
-		Debug.Log("Verify: StreamingAssets Path - " + Application.streamingAssetsPath);
+		Debug.Log("Verify: PersistentAssets Path - " + Application.persistentDataPath);
 
 		FileInfo[] allFiles = directoryInfo.GetFiles("*.*");
-		foreach (FileInfo f in allFiles) {
-			if ( f.Name.Contains(fileName) ) {
-				result = true;
-				mAssetLocalFilePath = Path.Combine(Application.streamingAssetsPath, mAssetAssignedFileName + mAssetFileType);
-				Debug.Log("Verify: AssetLocalFile Path - " + mAssetLocalFilePath);
+		if ( allFiles.Length != 0) {
+			foreach (FileInfo f in allFiles) {
+				if ( f.Name.Contains(fileName) ) {
+					result = true;
+					mAssetLocalFilePath = Path.Combine(Application.persistentDataPath, mAssetAssignedFileName + mAssetFileType);
+					Debug.Log("Verify: AssetLocalFile Path - " + mAssetLocalFilePath);
+				}
 			}
 		}
 
@@ -103,9 +107,14 @@ public class AssetContainer
 
 	public bool doesFileExistLocally ()
 	{
-		//string persistentFilePath = Application.streamingAssetsPath + "/" + mAssetAssignedFileName;
-		//bool result = File.Exists (persistentFilePath);
-		bool result = checkIfFileExistInStreamingAssetsPath(mAssetAssignedFileName);
+		bool result = !String.IsNullOrEmpty(mAssetLocalFilePath);
+		if ( result ) { 
+			try {
+				result = File.Exists (mAssetLocalFilePath);
+			} catch {
+				result = false;
+			}
+		}
 
 		String fileCheckString = " - Exists Locally: " + result;
 		String verifyFileExists = "Verify: File " + mAssetAssignedFileName + fileCheckString;
