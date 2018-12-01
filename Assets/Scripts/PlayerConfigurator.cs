@@ -26,6 +26,11 @@ public class PlayerConfigurator
     videoPlayer.prepareCompleted += prepareCompleted;
   }
 
+  public void stopVideo(GameObject playerContainer){
+    extractPlayerComponents(playerContainer);
+    videoPlayer.Stop();
+  }
+
   // Summary: Configure video source and audio settings and prepare video player for playback. 
   private void prepareVideoPlayer(string _url) {
     // Note: The sequence in video player is STRICT. It is inferred from 
