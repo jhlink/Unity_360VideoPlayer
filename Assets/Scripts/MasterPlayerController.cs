@@ -62,6 +62,7 @@ public class MasterPlayerController : MonoBehaviour
 		});	
 	}
 
+
 	private void startVideoPlayer() {
 		Debug.Log("Playing video : " + resultContainer.AssignedAssetFiledName);
 		playerConfigurator.playVideo(this.gameObject, resultContainer.AssetLocalFilePath);
@@ -73,5 +74,6 @@ public class MasterPlayerController : MonoBehaviour
 		if ( myVideoPlayer == null) {
 			myVideoPlayer = this.gameObject.AddComponent<VideoPlayer>();
 		}
+		playerConfigurator.configureVideoPlayer(this.gameObject);
 	}
 }
