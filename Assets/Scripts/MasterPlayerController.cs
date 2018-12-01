@@ -62,7 +62,7 @@ public class MasterPlayerController : MonoBehaviour
 		});	
 	}
 
-	private void stopVideo() {
+	public void stopVideo() {
 		playerConfigurator.stopVideo(this.gameObject);
 	}
 
