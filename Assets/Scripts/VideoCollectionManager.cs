@@ -47,7 +47,7 @@ public class VideoCollectionManager : MonoBehaviour
 	public AssetContainer getContainerWithKey(string key) {
 		AssetContainer videoContainer = new AssetContainer();
 		if ( videoStringMap.TryGetValue(key, out videoContainer) ) {
-			Debug.Log("Manager: Found " + key + " at Container:\n" + videoContainer.toString());
+			Debug.Log("Manager: Found " + key + " at Container:\n" + videoContainer.debugString());
 		} else {
 			Debug.Log("Manager: Value for " + key + " not found");
 		}

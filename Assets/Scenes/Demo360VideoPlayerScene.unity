@@ -210,7 +210,7 @@ GameObject:
   - component: {fileID: 690932488}
   - component: {fileID: 690932494}
   m_Layer: 0
-  m_Name: Sphere
+  m_Name: VideoSphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -258,8 +258,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9dd5b989c29c948f4a1d30c76f7aeaf2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  downloader: {fileID: 690932494}
-  manager: {fileID: 690932495}
   myVideoPlayer: {fileID: 690932488}
 --- !u!23 &690932490
 MeshRenderer:

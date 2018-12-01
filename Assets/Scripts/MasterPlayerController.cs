@@ -8,6 +8,8 @@ using UnityEngine.Video;
 
 public class MasterPlayerController : MonoBehaviour
 {
+
+	public bool playDemo = false;
 	public AssetDownloader downloader;
 	public VideoCollectionManager manager;
 
@@ -16,8 +18,12 @@ public class MasterPlayerController : MonoBehaviour
 
 	private void Start ()
 	{
-		manager.initialize();
 		initializeComponents();
+		manager.initialize();
+
+		if ( playDemo ) {
+			playVideo("sample");
+		}
 	}
 
 	[SerializeField]
@@ -40,7 +46,23 @@ public class MasterPlayerController : MonoBehaviour
 		});	
 	}
 
-	public void playVideo() {
+	public void playVideo(string videoName) {
+		resultContainer = manager.getContainerWithKey(videoName);
+
+		downloader.DownloadVideoAsync (resultContainer)
+			.Then ( mContainer => {
+			resultContainer = mContainer;
+			startVideoPlayer();
+		})
+			.Catch<System.OperationCanceledException> (e => {
+			startVideoPlayer();
+		})	
+			.Catch (e => {
+			Debug.LogException (e);
+		});	
+	}
+
+	private void startVideoPlayer() {
 		Debug.Log("Playing video : " + resultContainer.AssignedAssetFiledName);
 		playerConfigurator.playVideo(this.gameObject, resultContainer.AssetLocalFilePath);
 	}
@@ -52,6 +74,4 @@ public class MasterPlayerController : MonoBehaviour
 			myVideoPlayer = this.gameObject.AddComponent<VideoPlayer>();
 		}
 	}
-
-
 }
