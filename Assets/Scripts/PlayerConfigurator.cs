@@ -83,6 +83,10 @@ public class PlayerConfigurator
     var mesh = mPlayerContainer.GetComponent<MeshFilter>().mesh;
     invertNormals(mesh);
     setUnlitTexture(mPlayerContainer.GetComponent<Renderer>());
+
+    // Flip mirrored video by applying flip to x axis of local scale.  
+    var localScaleVector = mPlayerContainer.transform.localScale;
+    mPlayerContainer.transform.localScale = new Vector3(-localScaleVector.x, localScaleVector.y, localScaleVector.z);
   }
 
 // Summary: Helper method that extract AudioSource and VideoPlayer
