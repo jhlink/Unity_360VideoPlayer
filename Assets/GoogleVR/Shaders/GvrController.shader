@@ -16,13 +16,6 @@ Shader "GoogleVR/Unlit/Controller" {
   Properties {
     _Color ("Color", COLOR) = (1, 1, 1, 1)
     _MainTex ("Texture", 2D) = "white" {}
-    /// The center of the touchpad in UV space
-    /// Only change this value if you also change the UV layout of the mesh.
-    _GvrTouchpadCenterX ("GVR Touchpad Center UV.X", Float) = 0.15
-    _GvrTouchpadCenterY ("GVR Touchpad Center UV.Y", Float) = 0.85
-    /// The radius of the touchpad in UV space, based on the geometry
-    /// Only change this value if you also change the UV layout of the mesh.
-    _GVRTouchPadRadius("GVRTouchPadRadius", Range(0.0, 1.0)) = 0.139
   }
   SubShader {
     Tags {
@@ -59,7 +52,11 @@ Shader "GoogleVR/Unlit/Controller" {
 
       /// The center of the touchpad in UV space
       /// Only change this value if you also change the UV layout of the mesh
-      #define _GVR_TOUCHPAD_CENTER half2(_GvrTouchpadCenterX, _GvrTouchpadCenterY)
+      #define _GVR_TOUCHPAD_CENTER half2(.15, .85)
+
+      /// The radius of the touchpad in UV space, based on the geometry
+      /// Only change this value if you also change the UV layout of the mesh
+      #define _GVR_TOUCHPAD_RADIUS .139
 
       struct appdata {
         float4 vertex : POSITION;
@@ -85,9 +82,6 @@ Shader "GoogleVR/Unlit/Controller" {
       half4 _GvrSystemButtonColor;
       half4 _GvrBatteryColor;
       half4 _GvrTouchInfo;//xy position, z touch duration, w battery info
-      float _GvrTouchpadCenterX;
-      float _GvrTouchpadCenterY;
-      float _GVRTouchPadRadius;
 
       v2f vert (appdata v) {
         v2f o;
@@ -111,7 +105,7 @@ Shader "GoogleVR/Unlit/Controller" {
         // Update touch vector info, but only if in the touchpad region.
 
         //This is the distance between the scaled center of the touchpad in UV space, and the input coords
-        half2 touchPosition = ((v.uv - _GVR_TOUCHPAD_CENTER)/_GVRTouchPadRadius - _GvrTouchInfo.xy);
+        half2 touchPosition = ((v.uv - _GVR_TOUCHPAD_CENTER)/_GVR_TOUCHPAD_RADIUS - _GvrTouchInfo.xy);
 
         // the duration of a press + minimum radius
         half scaledInput = _GvrTouchInfo.z + _GVR_DISPLAY_RADIUS;

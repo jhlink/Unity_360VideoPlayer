@@ -32,4 +32,3 @@
 }
 
 -dontwarn com.google.protobuf.nano.NanoEnumValue
--dontwarn com.google.common.logging.nano.*

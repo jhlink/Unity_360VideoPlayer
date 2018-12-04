@@ -16,7 +16,6 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using Gvr.Internal;
 
 /// This script provides a raycaster for use with the GvrPointerInputModule.
 /// It behaves similarly to the standards Physics raycaster, except that it utilize raycast
@@ -74,7 +73,6 @@ public class GvrPointerPhysicsRaycaster : GvrBasePointerRaycaster {
 
   /// Camera used for masking layers and determining the screen position of the raycast result.
   public override Camera eventCamera {
-    [SuppressMemoryAllocationError(IsWarning=true, Reason="A getter for a Camera should not allocate.")]
     get {
       GvrBasePointer pointer = GvrPointerInputModule.Pointer;
       if (pointer == null) {
@@ -180,5 +178,4 @@ public class GvrPointerPhysicsRaycaster : GvrBasePointerRaycaster {
     }
   }
 #endif  // UNITY_EDITOR
-
 }

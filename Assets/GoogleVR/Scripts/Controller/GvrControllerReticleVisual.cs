@@ -15,7 +15,6 @@
 using System;
 using UnityEngine;
 using UnityEngine.Assertions;
-using Gvr.Internal;
 
 /// Visualizes a reticle using a Quad.
 /// Provides tuning options to control how the reticle scales and rotates based
@@ -72,7 +71,6 @@ public class GvrControllerReticleVisual : MonoBehaviour {
   private Vector3 preRenderLocalScale;
   private Quaternion preRenderLocalRotation;
 
-  [SuppressMemoryAllocationError(IsWarning=true, Reason="Pending documentation.")]
   public void RefreshMesh() {
     ReticleMeshSizeMeters = 1.0f;
     ReticleMeshSizeRatio = 1.0f;

@@ -374,12 +374,8 @@ namespace Gvr.Internal {
           // Destroys the eye cameras.
           EyeCamera curEyeCamera;
           if (eyeCameras.TryGetValue(oldCamera, out curEyeCamera)) {
-            if (curEyeCamera.leftEyeCamera != null) {
-              Destroy(curEyeCamera.leftEyeCamera.gameObject);
-            }
-            if (curEyeCamera.rightEyeCamera != null) {
-              Destroy(curEyeCamera.rightEyeCamera.gameObject);
-            }
+            Destroy(curEyeCamera.leftEyeCamera.gameObject);
+            Destroy(curEyeCamera.rightEyeCamera.gameObject);
           }
 
           // Removes eye camera entry from dictionary.
