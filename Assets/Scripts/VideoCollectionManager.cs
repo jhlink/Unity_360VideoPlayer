@@ -12,11 +12,20 @@ public class VideoCollectionManager : MonoBehaviour
 	private void Start() {
 		assertVideoArrayConditions();
 		initializeDictionary();
+		Application.lowMemory += onLowMemoryWarning;
 	}
 
 	private void assertVideoArrayConditions() {
 		Assert.raiseExceptions = true;
 		Assert.AreEqual(videoUrls.Length, videoID.Length);
+	}
+
+	private void onLowMemoryWarning() {
+		Debug.Log("Manager: Low Memory Warning Received -> Purging all video assets");
+		foreach (var item in videoStringMap.Values)
+		{
+			item.deleteFileFromSystem();
+		}
 	}
 
 	public void initialize() {
