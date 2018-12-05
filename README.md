@@ -16,6 +16,7 @@ The project encapsulates different functions of the variant 360 video player int
 - MasterPlayerController (MPC): The developer will load, play, or stop the video in this class via publicly exposed methods ( see class for more details ).
 - AssetDownloader (AD): When a video does not exist on the local device, the MPC delegates the asynchronous download of the file
   to the AssetDownloader class. Using UnityFx, Promises are utilized instead of Coroutines for performance and error handling.
+ - [Note] Downloaded files are stored on the [Application.persistentDataPath](https://docs.unity3d.com/ScriptReference/Application-persistentDataPath.html). Application.streamingAssetsPath was not used because the directory is readOnly at runtime.
 - VideoCollectionManager (VCM): The VideoCollectionManager largely manages the collection of video URLs and their respective ID, or video name. 
 
   [IMPORTANT] -- This is the hackiest aspect of the library. The VideoURL and VideoID lists must be equal in length, otherwise an assert with the class
@@ -61,7 +62,29 @@ The project encapsulates different functions of the variant 360 video player int
 
 
 ## Instructions
-### 
+Within the imported Unity package, there exists a VideoSphere prefab, which is already pre-configured to download and handle playback for 360 video content. 
+
+Click and drag the prefab to your scene, and within the VideoCollectionManager script populate the videoID and videoURL arrays with the video file name and the URL to the asset, respectively. 
+
+[Note] By default, the library assumes that the video is in .mp4 format and assumes that the video file is equirectangular. 
+
+Any given video may be played by calling the following public function provided by the MasterPlayerController class, where videoFileName is the video ID of the asset you wish to play. 
+
+`MasterPlayerController.playVideo(string videoFileName)`
+
+While other videos are playing or actions are occurring, other video assets can be downloaded in the background by calling the following.
+
+`MasterPlayerController.loadVideo(string videoFileName)`
+
+- [Note] Be sure to disable the 'Play Demo' flag within the Master Player Controller script. 
+
+The above functions only work for videos that are defined in the VideoCollectionManager script.
+
+### 360 Video Player Demo Scene
+
+### CardboardDemoScene
+
+
 
 
 ## Credits 
