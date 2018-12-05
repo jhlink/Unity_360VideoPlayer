@@ -36,6 +36,7 @@ The project encapsulates different functions of the variant 360 video player int
   - PlayerConfigurator: This class configures a vanilla Unity video player for 360 video playback and audio support. Additionally, inverting the normal vectors and flipping the mirrored video is handled here.  
 
 
+
               PUBLICLY            +         PRIVATE
             ACCESSIBLE API        |
                                   |
@@ -48,7 +49,7 @@ The project encapsulates different functions of the variant 360 video player int
            +-------v------+       |      +---------------+
            |              |       |      |  Video        |    +--------------+
            | MasterPlayer |<------------>|   Collection  |<-->|  Asset       |
-     ----->|  Controller  |       |      |    Manager    |    |   Container  |
+           |  Controller  |       |      |    Manager    |    |   Container  |
            |              |       |      +---------------+    +--------------+
            +-------^------+       |
                    |              |
