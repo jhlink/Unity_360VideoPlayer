@@ -13,6 +13,8 @@ This Unity package attempts to create a simple, variant 360 Video Player that ac
 
 This library is primarily developed for mobile platforms. This has been tested on the Android, but untested on iOS devices. As a result, resource utilization / asset downloading are executed based on need. 
 
+Unity Version: 2017.4.16f1
+
 ## Software Architecture Diagram 
 
 The project encapsulates different functions of the variant 360 video player into different classes explained in the following. 
