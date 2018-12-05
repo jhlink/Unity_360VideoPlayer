@@ -82,10 +82,13 @@ The above functions only work for videos that are defined in the VideoCollection
 
 ### 360 Video Player Demo Scene
 
+For developers familiar with Unity, this scene is a minimalist demo of the capabilities of a VideoSphere. 
+
+Given that the 'Play Demo' flag is set on the MasterPlayerController script within the VideoSphere GameObject, playing the scene should result with a video played immediately. 
+
 ### CardboardDemoScene
 
-
-
+This demo incorporates the Google VR SDK (v1.17.0) to demonstrate playing and stopping a 360 video player using the same function calls specified in the Instruction section above. 
 
 ## Credits 
 - Kudos to arvtesh for this awesome Asynchronous operations for Unity library. ( UnityFx.Async on the Asset Store ) 
