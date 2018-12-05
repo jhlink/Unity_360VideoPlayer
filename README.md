@@ -1,5 +1,7 @@
 # Description
 
+<span class="badge-patreon"><a href="https://www.patreon.com/bePatron?u=4334913" title="Donate to this project using Patreon"><img src="https://img.shields.io/badge/patreon-donate-red.svg" alt="Patreon donate button" /></a></span>
+
 This project attempts to create a basic implementation for a dedicated 360 video player in Unity.  
 
 The inspiration behind this project came after discovering that Unity's native video player does not handle asynchronous video downloads nor does it possess preset configurations for 360 video. 
@@ -99,6 +101,13 @@ This demo incorporates the Google VR SDK (v1.17.0) to demonstrate playing and st
 This means that the default "Unlit/Texture" is missing in the build file. 
 Go to Edit -> ProjectSettings -> Graphics -> Built-In Shader Settings.
 Ensure within the 'Always Included Shader' array that an element containing the "Unlit/Texture" exists. 
+
+## Thanks!
+Has this library helped you in some capacity? 
+
+Considering supporting me on [Patreon](https://www.patreon.com/bePatron?u=4334913)! 😆
+
+Your support helps me create, update, and polish more projects like this one!! 💪
 
 ## Credits 
 - Kudos to arvtesh for this awesome Asynchronous operations for Unity library. ( UnityFx.Async on the Asset Store ) 
