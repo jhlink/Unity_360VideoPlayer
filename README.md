@@ -9,6 +9,8 @@ This Unity package attempts to create a simple, variant 360 Video Player that ac
   - Note: Parallelized downloads have not been tested. 
 - "Normal Vector" inversion for view inside a primitive GameObject sphere.
 
+This library is primarily developed for mobile platforms. This has been tested on the Android, but untested on iOS devices. As a result, resource utilization / asset downloading are executed based on need. 
+
 ## Software Architecture Diagram 
 
 The project encapsulates different functions of the variant 360 video player into different classes explained in the following. 
@@ -89,6 +91,12 @@ Given that the 'Play Demo' flag is set on the MasterPlayerController script with
 ### CardboardDemoScene
 
 This demo incorporates the Google VR SDK (v1.17.0) to demonstrate playing and stopping a 360 video player using the same function calls specified in the Instruction section above. 
+
+## Troubleshooting
+- When building and installing the project on an Android device, the environment is pink. 
+This means that the default "Unlit/Texture" is missing in the build file. 
+Go to Edit -> ProjectSettings -> Graphics -> Built-In Shader Settings.
+Ensure within the 'Always Included Shader' array that an element containing the "Unlit/Texture" exists. 
 
 ## Credits 
 - Kudos to arvtesh for this awesome Asynchronous operations for Unity library. ( UnityFx.Async on the Asset Store ) 
