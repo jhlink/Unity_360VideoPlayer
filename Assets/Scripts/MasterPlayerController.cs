@@ -78,5 +78,10 @@ public class MasterPlayerController : MonoBehaviour
       myVideoPlayer = this.gameObject.AddComponent<VideoPlayer>();
     }
     playerConfigurator.configureVideoPlayer(this.gameObject);
+    downloader.progressChangedCallback += handleDownloadProgress;
+  }
+
+  private void handleDownloadProgress( float progressPercentage, string assetFileName ) {
+    Debug.Log(assetFileName + " progress percentage " + progressPercentage.ToString()) ;
   }
 }

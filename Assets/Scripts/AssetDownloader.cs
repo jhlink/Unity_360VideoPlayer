@@ -31,6 +31,9 @@ public class AssetDownloader : MonoBehaviour
         mContainer = downloadQueue.Dequeue();
 
         IAsyncOperation<AssetContainer> asyncOp = DownloadVideoAsync(mContainer);
+        asyncOp.ProgressChanged += ( sender, args ) => {
+          progressChangedCallback(args.ProgressPercentage, mContainer.AssignedAssetFiledName);
+        };
       }
     }
   }
