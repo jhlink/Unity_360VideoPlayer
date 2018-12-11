@@ -13,7 +13,6 @@ public class MasterPlayerController : MonoBehaviour
   public AssetDownloader downloader;
   public VideoCollectionManager manager;
 
-  private AssetContainer resultContainer;
   private PlayerConfigurator playerConfigurator;
 
   private void Start ()
@@ -36,26 +35,18 @@ public class MasterPlayerController : MonoBehaviour
   }
 
   public void playVideo(string videoName) {
-    resultContainer = manager.getContainerWithKey(videoName);
+    AssetContainer resultContainer = manager.getContainerWithKey(videoName);
 
-    downloader.DownloadVideoAsync (resultContainer)
-      .Then ( mContainer => {
-      resultContainer = mContainer;
-      startVideoPlayer();
-    })
-      .Catch<System.OperationCanceledException> (e => {
-      startVideoPlayer();
-    })	
-      .Catch (e => {
-      Debug.LogException (e);
-    });	
+    if ( resultContainer.doesFileExistLocally() ) {
+      startVideoPlayer( resultContainer ) ;
+    }
   }
 
   public void stopVideo() {
     playerConfigurator.stopVideo(this.gameObject);
   }
 
-  private void startVideoPlayer() {
+  private void startVideoPlayer(AssetContainer resultContainer) {
     Debug.Log("Playing video : " + resultContainer.AssignedAssetFiledName);
     playerConfigurator.playVideo(this.gameObject, resultContainer.AssetLocalFilePath);
   }
