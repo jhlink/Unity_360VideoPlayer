@@ -55,8 +55,7 @@ public class AssetDownloader : MonoBehaviour
     return result;
   }
 
-  public IAsyncOperation<AssetContainer> DownloadVideoAsync (AssetContainer container)
-  {
+  public IAsyncOperation<AssetContainer> DownloadVideoAsync (AssetContainer container) {
     mContainer = container;
 
     var result = new AsyncCompletionSource<AssetContainer> ();
@@ -72,8 +71,7 @@ public class AssetDownloader : MonoBehaviour
     return result;
   }
 
-  private void handleVideoByteBlob (byte[] data)
-  {
+  private void handleVideoByteBlob (byte[] data) {
     Debug.Log ("Coroutine/Promise/Handler: Begin writing data to file");
     byte[] _videoBytes = data;
 
@@ -85,8 +83,7 @@ public class AssetDownloader : MonoBehaviour
     Debug.Log ("Coroutine/Promise/Handler: File stored at " + _pathToFile);
   }
 
-  private IEnumerator DownloadVideoInternal (IAsyncCompletionSource<AssetContainer> op, string url)
-  {
+  private IEnumerator DownloadVideoInternal (IAsyncCompletionSource<AssetContainer> op, string url) {
     Debug.Log ("Coroutine/Promise: Request for Video Data");
 
     var www = UnityWebRequest.Get (url);
