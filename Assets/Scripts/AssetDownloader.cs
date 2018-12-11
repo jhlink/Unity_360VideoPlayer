@@ -40,7 +40,9 @@ public class AssetDownloader : MonoBehaviour {
         asyncOp.ProgressChanged += ( sender, args ) => {
           progressChangedCallback(args.ProgressPercentage, mContainer.AssignedAssetFiledName);
         };
-        asyncOp.Completed += ( parentOp ) => { isReadyToDownload = true; };
+        asyncOp.AddCompletionCallback( o  => {
+          isReadyToDownload = true;
+        });
       }
     }
   }
