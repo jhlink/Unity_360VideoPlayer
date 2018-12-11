@@ -8,8 +8,7 @@ using UnityEngine.Networking;
 using System;
 using System.IO;
 
-public class AssetDownloader : MonoBehaviour
-{
+public class AssetDownloader : MonoBehaviour {
   private Queue<AssetContainer> downloadQueue;
   private AssetContainer mContainer;
   private bool isReadyToDownload = true;
@@ -24,7 +23,7 @@ public class AssetDownloader : MonoBehaviour
     initiateNextDownload();
   }
 
-  private void initiateNextDownload()  {
+  private void initiateNextDownload() {
     if ( isReadyToDownload ) {
       if ( downloadQueue.Count > 0 ) {
         isReadyToDownload = false;
@@ -39,7 +38,7 @@ public class AssetDownloader : MonoBehaviour
   }
 
   public void enqueueAssetToDownload(ref AssetContainer container) {
-    if ( shouldEnqueue(container) ) {
+    if ( shouldEnqueue(ref container) ) {
       downloadQueue.Enqueue(container);
       Debug.Log ("AssetDownloader: Asset enqueued.");
     }
