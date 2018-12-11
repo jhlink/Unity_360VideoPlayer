@@ -23,6 +23,7 @@ public class AssetDownloader : MonoBehaviour {
   private void Update() {
     initiateNextDownload();
   }
+
   public void enqueueAssetToDownload(ref AssetContainer container) {
     if ( shouldEnqueue(ref container) ) {
       downloadQueue.Enqueue(container);
