@@ -12,9 +12,27 @@ public class AssetDownloader : MonoBehaviour
 {
   private Queue<AssetContainer> downloadQueue;
   private AssetContainer mContainer;
+  private bool isReadyToDownload = true;
+
+  public Action<float, string> progressChangedCallback;
 
   private void Start() {
     downloadQueue = new Queue<AssetContainer>();
+  }
+
+  private void Update() {
+    initiateNextDownload();
+  }
+
+  private void initiateNextDownload()  {
+    if ( isReadyToDownload ) {
+      if ( downloadQueue.Count > 0 ) {
+        isReadyToDownload = false;
+        mContainer = downloadQueue.Dequeue();
+
+        IAsyncOperation<AssetContainer> asyncOp = DownloadVideoAsync(mContainer);
+      }
+    }
   }
 
   public void enqueueAssetToDownload(ref AssetContainer container) {
