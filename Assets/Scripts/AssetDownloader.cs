@@ -10,7 +10,23 @@ using System.IO;
 
 public class AssetDownloader : MonoBehaviour
 {
+  private Queue<AssetContainer> downloadQueue;
   private AssetContainer mContainer;
+
+  private void Start() {
+    downloadQueue = new Queue<AssetContainer>();
+  }
+
+  public void enqueueAssetToDownload(ref AssetContainer container) {
+    if ( !downloadQueue.Contains(container) ) {
+      downloadQueue.Enqueue(container);
+      Debug.Log ("AssetDownloader: Asset enqueued.");
+    } else if ( mContainer.doesFileExistLocally () ) {
+      Debug.Log ("AssetDownloader: Asset already downloaded.");
+    } else { 
+      Debug.Log ("AssetDownloader: Asset already queued.");
+    }
+  }
 
   public IAsyncOperation<AssetContainer> DownloadVideoAsync (AssetContainer container)
   {
