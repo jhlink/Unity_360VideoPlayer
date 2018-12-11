@@ -29,21 +29,10 @@ public class MasterPlayerController : MonoBehaviour
   [SerializeField]
   internal VideoPlayer myVideoPlayer;
 
-  public void loadVideo(string videoName) {
-    resultContainer = manager.getContainerWithKey(videoName);
+  public void queueVideoDownload(string videoName) {
+    AssetContainer resultContainer = manager.getContainerWithKey(videoName);
 
-    downloader.DownloadVideoAsync (resultContainer)
-      .Then ( mContainer => {
-      resultContainer = mContainer;
-      Debug.Log (resultContainer.AssetLocalFilePath);
-    })
-      .Catch<System.OperationCanceledException> (e => {
-      Debug.Log (e);
-      Debug.Log (resultContainer.AssetLocalFilePath);
-    })	
-      .Catch (e => {
-      Debug.LogException (e);
-    });	
+    downloader.enqueueAssetToDownload(videoName);
   }
 
   public void playVideo(string videoName) {
