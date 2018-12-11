@@ -23,6 +23,12 @@ public class AssetDownloader : MonoBehaviour {
   private void Update() {
     initiateNextDownload();
   }
+  public void enqueueAssetToDownload(ref AssetContainer container) {
+    if ( shouldEnqueue(ref container) ) {
+      downloadQueue.Enqueue(container);
+      Debug.Log ("AssetDownloader: Asset enqueued.");
+    }
+  }
 
   private void initiateNextDownload() {
     if ( isReadyToDownload ) {
@@ -39,21 +45,19 @@ public class AssetDownloader : MonoBehaviour {
     }
   }
 
-  public void enqueueAssetToDownload(ref AssetContainer container) {
-    if ( shouldEnqueue(ref container) ) {
-      downloadQueue.Enqueue(container);
-      Debug.Log ("AssetDownloader: Asset enqueued.");
-    }
-  }
-
   private bool shouldEnqueue( ref AssetContainer container ) {
     bool result = false;
-    if ( !downloadQueue.Contains(container) ) {
-      result = true;
+    if ( mContainer == container ) {
+      // Note: We only care if the container and mContainer objects both refer to the same object.
+      Debug.Log ("AssetDownloader: Asset downloading.");
+    } else if ( downloadQueue.Contains(container) ) {
+      Debug.Log ("AssetDownloader: Asset already queued.");
     } else if ( mContainer.doesFileExistLocally () ) {
       Debug.Log ("AssetDownloader: Asset already downloaded.");
-    } else { 
-      Debug.Log ("AssetDownloader: Asset already queued.");
+    } else if ( !downloadQueue.Contains(container) ) { 
+      // The above condition is a sanity check to avoid any unexpected behaviour
+      //  from a broad, catch-all 'else' statement. 
+      result = true;
     }
 
     return result;
