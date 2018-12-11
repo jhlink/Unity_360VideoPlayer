@@ -18,14 +18,23 @@ public class AssetDownloader : MonoBehaviour
   }
 
   public void enqueueAssetToDownload(ref AssetContainer container) {
-    if ( !downloadQueue.Contains(container) ) {
+    if ( shouldEnqueue(container) ) {
       downloadQueue.Enqueue(container);
       Debug.Log ("AssetDownloader: Asset enqueued.");
+    }
+  }
+
+  private bool shouldEnqueue( ref AssetContainer container ) {
+    bool result = false;
+    if ( !downloadQueue.Contains(container) ) {
+      result = true;
     } else if ( mContainer.doesFileExistLocally () ) {
       Debug.Log ("AssetDownloader: Asset already downloaded.");
     } else { 
       Debug.Log ("AssetDownloader: Asset already queued.");
     }
+
+    return result;
   }
 
   public IAsyncOperation<AssetContainer> DownloadVideoAsync (AssetContainer container)
