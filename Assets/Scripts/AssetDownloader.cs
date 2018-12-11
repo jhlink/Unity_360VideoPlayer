@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityFx.Async;
 using UnityFx.Async.Promises;
 
@@ -29,7 +30,7 @@ public class AssetDownloader : MonoBehaviour {
         isReadyToDownload = false;
         mContainer = downloadQueue.Dequeue();
 
-        IAsyncOperation<AssetContainer> asyncOp = DownloadVideoAsync(mContainer);
+        IAsyncOperation<AssetContainer> asyncOp = DownloadVideoAsync();
         asyncOp.ProgressChanged += ( sender, args ) => {
           progressChangedCallback(args.ProgressPercentage, mContainer.AssignedAssetFiledName);
         };
@@ -57,9 +58,7 @@ public class AssetDownloader : MonoBehaviour {
     return result;
   }
 
-  public IAsyncOperation<AssetContainer> DownloadVideoAsync (AssetContainer container) {
-    mContainer = container;
-
+  private IAsyncOperation<AssetContainer> DownloadVideoAsync () {
     var result = new AsyncCompletionSource<AssetContainer> ();
       
     if (mContainer.doesFileExistLocally ()) {
