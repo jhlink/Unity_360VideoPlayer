@@ -126,6 +126,7 @@ public class AssetDownloader : MonoBehaviour {
   }
 
   //  Summary: Takes a byte[] of the video downloaded and writes it into memory
+  //    using the filename and extension provided by mContainer.
   private void handleVideoByteBlob(byte[] data) {
     Debug.Log("Coroutine/Promise/Handler: Begin writing data to file");
     byte[] _videoBytes = data;
