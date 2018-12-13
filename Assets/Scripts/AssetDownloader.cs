@@ -26,9 +26,9 @@ public class AssetDownloader : MonoBehaviour {
   }
 
   public void enqueueAssetToDownload(ref AssetContainer container) {
-    if ( shouldEnqueue(ref container) ) {
+    if (shouldEnqueue(ref container)) {
       downloadQueue.Enqueue(container);
-      Debug.Log ("AssetDownloader: Asset enqueued.");
+      Debug.Log("AssetDownloader: Asset enqueued.");
     }
   }
 
@@ -49,16 +49,16 @@ public class AssetDownloader : MonoBehaviour {
     }
   }
 
-  private bool shouldEnqueue( ref AssetContainer container ) {
+  private bool shouldEnqueue(ref AssetContainer container) {
     bool result = false;
-    if ( mContainer == container ) {
+    if (mContainer == container) {
       // Note: We only care if the container and mContainer objects both refer to the same object.
-      Debug.Log ("AssetDownloader: Asset downloading.");
-    } else if ( downloadQueue.Contains(container) ) {
-      Debug.Log ("AssetDownloader: Asset already queued.");
-    } else if ( mContainer.doesFileExistLocally () ) {
-      Debug.Log ("AssetDownloader: Asset already downloaded.");
-    } else if ( !downloadQueue.Contains(container) ) { 
+      Debug.Log("AssetDownloader: Asset downloading.");
+    } else if (downloadQueue.Contains(container)) {
+      Debug.Log("AssetDownloader: Asset already queued.");
+    } else if (mContainer.doesFileExistLocally()) {
+      Debug.Log("AssetDownloader: Asset already downloaded.");
+    } else if (!downloadQueue.Contains(container)) {
       // The above condition is a sanity check to avoid any unexpected behaviour
       //  from a broad, catch-all 'else' statement. 
       result = true;
@@ -67,14 +67,14 @@ public class AssetDownloader : MonoBehaviour {
     return result;
   }
 
-  private IAsyncOperation<AssetContainer> DownloadVideoAsync () {
-    var result = new AsyncCompletionSource<AssetContainer> ();
-      
-    if (mContainer.doesFileExistLocally ()) {
-      Debug.Log ("AssetDownloader: File already exists.");
-      result.SetCanceled ();
+  private IAsyncOperation<AssetContainer> DownloadVideoAsync() {
+    var result = new AsyncCompletionSource<AssetContainer>();
+
+    if (mContainer.doesFileExistLocally()) {
+      Debug.Log("AssetDownloader: File already exists.");
+      result.SetCanceled();
     } else {
-      Debug.Log ("Coroutine: Start DownloadAsyncVideoData");
+      Debug.Log("Coroutine: Start DownloadAsyncVideoData");
       AsyncUtility.StartCoroutine(DownloadVideoInternal(result, mContainer.AssetHttpEndpoint));
     }
 
