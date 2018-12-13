@@ -49,7 +49,7 @@ public class AssetDownloader : MonoBehaviour {
 
       mContainer = priorityContainer;
 
-      DownloadVideoAsync().Then(assetContainer => {
+      downloadVideoAsync().Then(assetContainer => {
         priorityCallback(assetContainer);
         priorityContainer = null;
         isReadyToDownload = true;
@@ -60,7 +60,7 @@ public class AssetDownloader : MonoBehaviour {
 
       mContainer = downloadQueue.Dequeue();
 
-      DownloadVideoAsync().Then(assetContainer => {
+      downloadVideoAsync().Then(assetContainer => {
         isReadyToDownload = true;
       });
     }
@@ -84,7 +84,7 @@ public class AssetDownloader : MonoBehaviour {
     return result;
   }
 
-  private IAsyncOperation<AssetContainer> DownloadVideoAsync() {
+  private IAsyncOperation<AssetContainer> downloadVideoAsync() {
     var result = new AsyncCompletionSource<AssetContainer>();
 
     if (mContainer.doesFileExistLocally()) {
@@ -92,7 +92,7 @@ public class AssetDownloader : MonoBehaviour {
       result.SetCanceled();
     } else {
       Debug.Log("Coroutine: Start DownloadAsyncVideoData");
-      AsyncUtility.StartCoroutine(DownloadVideoInternal(result, mContainer.AssetHttpEndpoint));
+      AsyncUtility.StartCoroutine(downloadVideoInternal(result, mContainer.AssetHttpEndpoint));
     }
 
     return result;
@@ -100,7 +100,7 @@ public class AssetDownloader : MonoBehaviour {
 
   //  Summary: The UnityWebRequest is executed through a Coroutine in order to capture
   //    progress data to report through the progressChangedCallback Action.
-  private IEnumerator DownloadVideoInternal(IAsyncCompletionSource<AssetContainer> op, string url) {
+  private IEnumerator downloadVideoInternal(IAsyncCompletionSource<AssetContainer> op, string url) {
     Debug.Log("Coroutine/Promise: Request for Video Data");
 
     var www = UnityWebRequest.Get(url);
