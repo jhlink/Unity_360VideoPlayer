@@ -42,6 +42,8 @@ public class AssetDownloader : MonoBehaviour {
     isFlaggedPriority = true;
   }
 
+  //  Summary: Helper function that initiates the subsequent file download, which
+  //    includes both priority and normal enqueue. 
   private void initiateNextDownload() {
     if (isFlaggedPriority) {
       isReadyToDownload = false;
