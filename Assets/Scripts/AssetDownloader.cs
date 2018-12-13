@@ -75,7 +75,7 @@ public class AssetDownloader : MonoBehaviour {
       result.SetCanceled ();
     } else {
       Debug.Log ("Coroutine: Start DownloadAsyncVideoData");
-      StartCoroutine (DownloadVideoInternal (result, mContainer.AssetHttpEndpoint));
+      AsyncUtility.StartCoroutine(DownloadVideoInternal(result, mContainer.AssetHttpEndpoint));
     }
 
     return result;
