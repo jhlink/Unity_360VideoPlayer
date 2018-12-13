@@ -32,10 +32,15 @@ public class MasterPlayerController : MonoBehaviour {
     downloader.enqueueAssetToDownload(ref resultContainer);
   }
 
+  public bool isAssetDownloaded(string videoName) {
+    AssetContainer resultContainer = manager.getContainerWithKey(videoName);
+    return resultContainer.doesFileExistLocally(); 
+  }
+
   public void playVideo(string videoName) {
     AssetContainer resultContainer = manager.getContainerWithKey(videoName);
 
-    if (resultContainer.doesFileExistLocally()) {
+    if (isAssetDownloaded(videoName)) {
       startVideoPlayer(resultContainer);
     } else {
       Debug.Log("MasterPlayerController: Asset does not exist locally -> Initiating OnTheFly Download");
