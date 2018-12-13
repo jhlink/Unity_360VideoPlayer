@@ -84,6 +84,8 @@ public class AssetDownloader : MonoBehaviour {
     return result;
   }
 
+  //  Summary: A wrapper function that handles pre-download checks and initiates the 
+  //    Download coroutine, the use of which is essential for download progress tracking.
   private IAsyncOperation<AssetContainer> downloadVideoAsync() {
     var result = new AsyncCompletionSource<AssetContainer>();
 
