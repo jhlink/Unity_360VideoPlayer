@@ -24,7 +24,9 @@ public class AssetDownloader : MonoBehaviour {
   }
 
   private void Update() {
-    initiateNextDownload();
+    if (isReadyToDownload) {
+      initiateNextDownload();
+    }
   }
 
   public void enqueueAssetToDownload(ref AssetContainer container) {
@@ -41,19 +43,26 @@ public class AssetDownloader : MonoBehaviour {
   }
 
   private void initiateNextDownload() {
-    if ( isReadyToDownload ) {
-      if ( downloadQueue.Count > 0 ) {
-        isReadyToDownload = false;
-        mContainer = downloadQueue.Dequeue();
+    if (isFlaggedPriority) {
+      isReadyToDownload = false;
+      isFlaggedPriority = false;
 
-        IAsyncOperation<AssetContainer> asyncOp = DownloadVideoAsync();
-        asyncOp.ProgressChanged += ( sender, args ) => {
-          progressChangedCallback(args.ProgressPercentage, mContainer.AssignedAssetFiledName);
-        };
-        asyncOp.AddCompletionCallback( o  => {
-          isReadyToDownload = true;
-        });
-      }
+      mContainer = priorityContainer;
+
+      DownloadVideoAsync().Then(assetContainer => {
+        priorityCallback(assetContainer);
+        priorityContainer = null;
+        isReadyToDownload = true;
+      });
+
+    } else if (downloadQueue.Count > 0) {
+      isReadyToDownload = false;
+
+      mContainer = downloadQueue.Dequeue();
+
+      DownloadVideoAsync().Then(assetContainer => {
+        isReadyToDownload = true;
+      });
     }
   }
 
