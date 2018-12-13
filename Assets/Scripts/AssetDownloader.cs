@@ -36,6 +36,9 @@ public class AssetDownloader : MonoBehaviour {
     }
   }
 
+  //  Summary: This function sets the condition for the requested container to be
+  //    downloaded after the completed download of the current asset in order to
+  //    centralize all downloaded through the initiateNextDownload method. 
   public void priorityEnqueueVideo(ref AssetContainer container, Action<AssetContainer> completionCallback) {
     priorityContainer = container;
     priorityCallback = completionCallback;
