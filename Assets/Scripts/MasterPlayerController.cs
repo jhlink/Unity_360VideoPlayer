@@ -31,7 +31,7 @@ public class MasterPlayerController : MonoBehaviour
   public void queueVideoDownload(string videoName) {
     AssetContainer resultContainer = manager.getContainerWithKey(videoName);
 
-    downloader.enqueueAssetToDownload(videoName);
+    downloader.enqueueAssetToDownload(ref resultContainer);
   }
 
   public void playVideo(string videoName) {
