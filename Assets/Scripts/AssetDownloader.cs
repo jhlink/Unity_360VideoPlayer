@@ -29,6 +29,8 @@ public class AssetDownloader : MonoBehaviour {
     }
   }
 
+  //  Summary: The go-to function when requesting any asset to be downloaded
+  //    due to its conditional pre-checks.   
   public void enqueueAssetToDownload(ref AssetContainer container) {
     if (shouldEnqueue(ref container)) {
       downloadQueue.Enqueue(container);
