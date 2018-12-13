@@ -37,6 +37,11 @@ public class MasterPlayerController : MonoBehaviour {
     return resultContainer.doesFileExistLocally(); 
   }
 
+  public bool isAssetInDownloadQueue(string videoName) {
+    AssetContainer resultContainer = manager.getContainerWithKey(videoName);
+    return downloader.isAssetQueuedForDownload(ref resultContainer);
+  }
+
   public void playVideo(string videoName) {
     AssetContainer resultContainer = manager.getContainerWithKey(videoName);
 
