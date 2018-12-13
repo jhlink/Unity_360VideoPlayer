@@ -66,6 +66,8 @@ public class AssetDownloader : MonoBehaviour {
     }
   }
 
+  //  Summary: Helper function that checks for file existence
+  //    in local memory and in the download queue. 
   private bool shouldEnqueue(ref AssetContainer container) {
     bool result = false;
     if (mContainer == container) {
