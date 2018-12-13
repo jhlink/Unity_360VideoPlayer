@@ -123,7 +123,7 @@ Prefab:
     - target: {fileID: 114364715314114638, guid: 80a249b9f11e240db93e41cb0ba62dfb,
         type: 2}
       propertyPath: videoID.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4675868934366494, guid: 80a249b9f11e240db93e41cb0ba62dfb, type: 2}
       propertyPath: m_LocalPosition.x
@@ -168,7 +168,7 @@ Prefab:
     - target: {fileID: 114364715314114638, guid: 80a249b9f11e240db93e41cb0ba62dfb,
         type: 2}
       propertyPath: videoID.Array.data[1]
-      value: fe
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 114364715314114638, guid: 80a249b9f11e240db93e41cb0ba62dfb,
         type: 2}
