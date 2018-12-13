@@ -107,7 +107,7 @@ public class AssetDownloader : MonoBehaviour {
     var result = www.SendWebRequest();
 
     while (!result.isDone) {
-      if ( progressChangedCallback != null ) {
+      if (progressChangedCallback != null) {
         progressChangedCallback(result.progress, mContainer.AssignedAssetFiledName);
       } else {
         Debug.LogWarning("AssetDownloader: ProgressChangedCallback Action is null.");
@@ -125,7 +125,7 @@ public class AssetDownloader : MonoBehaviour {
     }
   }
 
-//  Summary: Takes a byte[] of the video downloaded and writes it into memory
+  //  Summary: Takes a byte[] of the video downloaded and writes it into memory
   private void handleVideoByteBlob(byte[] data) {
     Debug.Log("Coroutine/Promise/Handler: Begin writing data to file");
     byte[] _videoBytes = data;
