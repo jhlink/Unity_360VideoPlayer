@@ -54,27 +54,43 @@ public class AssetDownloader : MonoBehaviour {
     if (isFlaggedPriority) {
       isReadyToDownload = false;
       isFlaggedPriority = false;
-
       mContainer = priorityContainer;
+      Debug.Log("AssetDownloader/InitiateNextDownload/Priority: Initiating download for " + mContainer.AssignedAssetFiledName);
 
-      downloadVideoAsync().Then(assetContainer => {
-        priorityCallback(assetContainer);
+      IAsyncOperation<AssetContainer> asyncOp = downloadVideoAsync();
+
+      asyncOp.Completed += ( sender, args ) => {
+        priorityCallback(mContainer);
         priorityContainer = null;
         isReadyToDownload = true;
-      });
+      };
 
-      Debug.Log("AssetDownloader/InitiateNextDownload/Priority: Initiating download for " + mContainer.AssignedAssetFiledName);
+      configuredAsyncOperationProgressChangedCallback(asyncOp);
     } else if (downloadQueue.Count > 0) {
+
       isReadyToDownload = false;
-
       mContainer = downloadQueue.Dequeue();
-
-      downloadVideoAsync().Then(assetContainer => {
-        isReadyToDownload = true;
-      });
-
       Debug.Log("AssetDownloader/InitiateNextDownload/Normal: Initiating download for " + mContainer.AssignedAssetFiledName);
+
+      IAsyncOperation<AssetContainer> asyncOp = downloadVideoAsync();
+
+      asyncOp.Completed += ( sender, args )  => {
+        isReadyToDownload = true;
+      };
+
+      configuredAsyncOperationProgressChangedCallback(asyncOp);
     }
+  }
+
+  //  Summary: Helper method to avoid code duplication for ProgressChanged callback for an AsyncOperation
+  private void configuredAsyncOperationProgressChangedCallback(IAsyncOperation<AssetContainer> container) {
+      container.ProgressChanged += ( sender, args ) => {
+        if ( progressChangedCallback != null ) {
+          progressChangedCallback(args.ProgressPercentage, mContainer.AssignedAssetFiledName);
+        } else {
+          Debug.Log("AssetDownloader: ProgressChangedCallback is null");
+        }
+      };
   }
 
   // Summary: Publicly exposed method that checks whether the asset is pending download.
@@ -105,7 +121,7 @@ public class AssetDownloader : MonoBehaviour {
   //  Summary: A wrapper function that handles pre-download checks and initiates the 
   //    Download coroutine, the use of which is essential for download progress tracking.
   private IAsyncOperation<AssetContainer> downloadVideoAsync() {
-    var result = new AsyncCompletionSource<AssetContainer>();
+    var result = new AsyncCompletionSource<AssetContainer>(AsyncOperationStatus.Running);
 
     if (mContainer.doesFileExistLocally()) {
       Debug.Log("AssetDownloader: File already exists.");
@@ -115,7 +131,7 @@ public class AssetDownloader : MonoBehaviour {
       AsyncUtility.StartCoroutine(downloadVideoInternal(result, mContainer.AssetHttpEndpoint));
     }
 
-    return result;
+    return result.Operation;
   }
 
   //  Summary: The UnityWebRequest is executed through a Coroutine in order to capture
@@ -127,11 +143,7 @@ public class AssetDownloader : MonoBehaviour {
     var result = www.SendWebRequest();
 
     while (!result.isDone) {
-      if (progressChangedCallback != null) {
-        progressChangedCallback(result.progress, mContainer.AssignedAssetFiledName);
-      } else {
-        Debug.LogWarning("AssetDownloader: ProgressChangedCallback Action is null.");
-      }
+      op.TrySetProgress(result.progress);
       yield return null;
     }
 
