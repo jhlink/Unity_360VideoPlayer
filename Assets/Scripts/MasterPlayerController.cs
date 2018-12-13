@@ -6,8 +6,7 @@ using System.IO;
 using UnityFx.Async.Promises;
 using UnityEngine.Video;
 
-public class MasterPlayerController : MonoBehaviour
-{
+public class MasterPlayerController : MonoBehaviour {
 
   public bool playDemo = false;
   public AssetDownloader downloader;
@@ -15,12 +14,11 @@ public class MasterPlayerController : MonoBehaviour
 
   private PlayerConfigurator playerConfigurator;
 
-  private void Start ()
-  {
+  private void Start() {
     initializeComponents();
     manager.initialize();
 
-    if ( playDemo ) {
+    if (playDemo) {
       playVideo("sample");
     }
   }
@@ -37,11 +35,11 @@ public class MasterPlayerController : MonoBehaviour
   public void playVideo(string videoName) {
     AssetContainer resultContainer = manager.getContainerWithKey(videoName);
 
-    if ( resultContainer.doesFileExistLocally() ) {
-      startVideoPlayer( resultContainer );
-    } else { 
+    if (resultContainer.doesFileExistLocally()) {
+      startVideoPlayer(resultContainer);
+    } else {
       Debug.Log("MasterPlayerController: Asset does not exist locally -> Initiating OnTheFly Download");
-      downloader.priorityEnqueueVideo( ref resultContainer, startVideoPlayer);
+      downloader.priorityEnqueueVideo(ref resultContainer, startVideoPlayer);
     }
   }
 
@@ -57,14 +55,14 @@ public class MasterPlayerController : MonoBehaviour
   private void initializeComponents() {
     this.gameObject.AddComponent<AudioSource>();
     playerConfigurator = new PlayerConfigurator();
-    if ( myVideoPlayer == null) {
+    if (myVideoPlayer == null) {
       myVideoPlayer = this.gameObject.AddComponent<VideoPlayer>();
     }
     playerConfigurator.configureVideoPlayer(this.gameObject);
     downloader.progressChangedCallback += handleDownloadProgress;
   }
 
-  private void handleDownloadProgress( float progressPercentage, string assetFileName ) {
-    Debug.Log(assetFileName + " progress percentage " + progressPercentage.ToString()) ;
+  private void handleDownloadProgress(float progressPercentage, string assetFileName) {
+    Debug.Log(assetFileName + " progress percentage " + progressPercentage.ToString());
   }
 }
