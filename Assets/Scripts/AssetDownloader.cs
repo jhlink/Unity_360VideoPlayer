@@ -13,6 +13,8 @@ public class AssetDownloader : MonoBehaviour {
   private Queue<AssetContainer> downloadQueue;
   private AssetContainer mContainer;
   private bool isReadyToDownload = true;
+  private bool isFlaggedPriority = false;
+  private AssetContainer priorityContainer;
   private Action<AssetContainer> priorityCallback;
 
   public Action<float, string> progressChangedCallback;
@@ -30,6 +32,12 @@ public class AssetDownloader : MonoBehaviour {
       downloadQueue.Enqueue(container);
       Debug.Log("AssetDownloader: Asset enqueued.");
     }
+  }
+
+  public void priorityEnqueueVideo(ref AssetContainer container, Action<AssetContainer> completionCallback) {
+    priorityContainer = container;
+    priorityCallback = completionCallback;
+    isFlaggedPriority = true;
   }
 
   private void initiateNextDownload() {
