@@ -77,6 +77,11 @@ public class AssetDownloader : MonoBehaviour {
     }
   }
 
+  // Summary: Publicly exposed method that checks whether the asset is pending download.
+  public bool isAssetQueuedForDownload( ref AssetContainer container ) {
+    return !shouldEnqueue(ref container);
+  }
+
   //  Summary: Helper function that checks for file existence
   //    in local memory and in the download queue. 
   private bool shouldEnqueue(ref AssetContainer container) {
