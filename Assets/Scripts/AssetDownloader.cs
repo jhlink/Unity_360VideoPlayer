@@ -13,6 +13,7 @@ public class AssetDownloader : MonoBehaviour {
   private Queue<AssetContainer> downloadQueue;
   private AssetContainer mContainer;
   private bool isReadyToDownload = true;
+  private Action<AssetContainer> priorityCallback;
 
   public Action<float, string> progressChangedCallback;
 
@@ -80,16 +81,31 @@ public class AssetDownloader : MonoBehaviour {
     return result;
   }
 
-  private void handleVideoByteBlob (byte[] data) {
-    Debug.Log ("Coroutine/Promise/Handler: Begin writing data to file");
-    byte[] _videoBytes = data;
+  //  Summary: The UnityWebRequest is executed through a Coroutine in order to capture
+  //    progress data to report through the progressChangedCallback Action.
+  private IEnumerator DownloadVideoInternal(IAsyncCompletionSource<AssetContainer> op, string url) {
+    Debug.Log("Coroutine/Promise: Request for Video Data");
 
-    string _pathToFile = Path.Combine (Application.persistentDataPath, mContainer.AssignedAssetFiledName + mContainer.AssetFileType);
+    var www = UnityWebRequest.Get(url);
+    var result = www.SendWebRequest();
 
-    mContainer.AssetLocalFilePath = _pathToFile;
+    while (!result.isDone) {
+      if ( progressChangedCallback != null ) {
+        progressChangedCallback(result.progress, mContainer.AssignedAssetFiledName);
+      } else {
+        Debug.LogWarning("AssetDownloader: ProgressChangedCallback Action is null.");
+      }
+      yield return null;
+    }
 
-    File.WriteAllBytes (_pathToFile, _videoBytes);
-    Debug.Log ("Coroutine/Promise/Handler: File stored at " + _pathToFile);
+    if (www.isNetworkError || www.isHttpError) {
+      Debug.Log("Coroutine/Promise: Request failed");
+      op.SetException(new Exception(www.error));
+    } else {
+      Debug.Log("Coroutine/Promise: Request succeeded");
+      handleVideoByteBlob(www.downloadHandler.data);
+      op.SetResult(mContainer);
+    }
   }
 
 //  Summary: Takes a byte[] of the video downloaded and writes it into memory
