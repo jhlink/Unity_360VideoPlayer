@@ -92,19 +92,16 @@ public class AssetDownloader : MonoBehaviour {
     Debug.Log ("Coroutine/Promise/Handler: File stored at " + _pathToFile);
   }
 
-  private IEnumerator DownloadVideoInternal (IAsyncCompletionSource<AssetContainer> op, string url) {
-    Debug.Log ("Coroutine/Promise: Request for Video Data");
+//  Summary: Takes a byte[] of the video downloaded and writes it into memory
+  private void handleVideoByteBlob(byte[] data) {
+    Debug.Log("Coroutine/Promise/Handler: Begin writing data to file");
+    byte[] _videoBytes = data;
 
-    var www = UnityWebRequest.Get (url);
-    yield return www.SendWebRequest ();
+    string _pathToFile = Path.Combine(Application.persistentDataPath, mContainer.AssignedAssetFiledName + mContainer.AssetFileType);
 
-    if (www.isNetworkError || www.isHttpError) {
-      Debug.Log ("Coroutine/Promise: Request failed");
-      op.SetException (new Exception (www.error));
-    } else {
-      Debug.Log ("Coroutine/Promise: Request succeeded");
-      handleVideoByteBlob (www.downloadHandler.data);
-      op.SetResult (mContainer);
-    }
+    mContainer.AssetLocalFilePath = _pathToFile;
+
+    File.WriteAllBytes(_pathToFile, _videoBytes);
+    Debug.Log("Coroutine/Promise/Handler: File stored at " + _pathToFile);
   }
 }
