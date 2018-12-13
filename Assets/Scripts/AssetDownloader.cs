@@ -34,7 +34,7 @@ public class AssetDownloader : MonoBehaviour {
   public void enqueueAssetToDownload(ref AssetContainer container) {
     if (shouldEnqueue(ref container)) {
       downloadQueue.Enqueue(container);
-      Debug.Log("AssetDownloader: Asset enqueued.");
+      Debug.Log("AssetDownloader: Enqueued Asset of ID : " + container.AssignedAssetFiledName);
     }
   }
 
@@ -45,6 +45,7 @@ public class AssetDownloader : MonoBehaviour {
     priorityContainer = container;
     priorityCallback = completionCallback;
     isFlaggedPriority = true;
+    Debug.Log("AssetDownloader/PriorityEnqueueVideo: Set flag, container, and callback");
   }
 
   //  Summary: Helper function that initiates the subsequent file download, which
@@ -62,6 +63,7 @@ public class AssetDownloader : MonoBehaviour {
         isReadyToDownload = true;
       });
 
+      Debug.Log("AssetDownloader/InitiateNextDownload/Priority: Initiating download for " + mContainer.AssignedAssetFiledName);
     } else if (downloadQueue.Count > 0) {
       isReadyToDownload = false;
 
@@ -70,6 +72,8 @@ public class AssetDownloader : MonoBehaviour {
       downloadVideoAsync().Then(assetContainer => {
         isReadyToDownload = true;
       });
+
+      Debug.Log("AssetDownloader/InitiateNextDownload/Normal: Initiating download for " + mContainer.AssignedAssetFiledName);
     }
   }
 
