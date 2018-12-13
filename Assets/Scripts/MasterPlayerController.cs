@@ -38,7 +38,10 @@ public class MasterPlayerController : MonoBehaviour
     AssetContainer resultContainer = manager.getContainerWithKey(videoName);
 
     if ( resultContainer.doesFileExistLocally() ) {
-      startVideoPlayer( resultContainer ) ;
+      startVideoPlayer( resultContainer );
+    } else { 
+      Debug.Log("MasterPlayerController: Asset does not exist locally -> Initiating OnTheFly Download");
+      downloader.priorityEnqueueVideo( ref resultContainer, startVideoPlayer);
     }
   }
 
