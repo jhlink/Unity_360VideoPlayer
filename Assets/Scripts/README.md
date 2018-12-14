@@ -1,5 +1,7 @@
 # Description
 
+v0.0.6
+
 This project attempts to create a basic implementation for a dedicated 360 video player in Unity.  
 
 The inspiration behind this project came after discovering that Unity's native video player does not handle asynchronous video downloads nor does it possess preset configurations for 360 video. 
