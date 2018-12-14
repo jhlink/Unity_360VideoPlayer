@@ -89,6 +89,21 @@ While other videos are playing or actions are occurring, other video assets can 
 
 The above functions only work for videos that are defined in the VideoCollectionManager script.
 
+### Progress Tracking
+Glorious progress tracking has been implemented via the UnityFx.Async library. The AssetDownloader will attempt to process any queued assets as quickly as possible, so an assetFileName has been provided to identify the asset with the associated progressValue.
+
+This handler is called from AssetDownloader whenever the progressValue changes for a given download. 
+Therefore, it is encouraged to implement any progress updating functionationality within this function.  
+
+`handleDownloadProgress(float progressValue, string assetFileName)`
+
+Various file check functions have also been provided in case the asset has already been downloaded and the reported progressValue is not associated with the desired asset.    
+
+```
+MasterPlayerController.isAssetDownloaded(string videoFileName)
+MasterPlayerController.isAssetInDownloadQueue(string videoFileName)
+```
+
 ### 360 Video Player Demo Scene
 
 For developers familiar with Unity, this scene is a minimalist demo of the capabilities of a VideoSphere. 
