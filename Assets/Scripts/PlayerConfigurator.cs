@@ -16,8 +16,7 @@ public class PlayerConfigurator
     configureGameObjectFor360Content(playerContainer);
   }
 
-  public void initializeVideo(GameObject playerContainer, string _url)
-  {
+  public void initializeVideo(GameObject playerContainer, string _url) {
     extractPlayerComponents(playerContainer);
     prepareVideoPlayer(_url);
 
@@ -26,7 +25,7 @@ public class PlayerConfigurator
     videoPlayer.prepareCompleted += prepareCompleted;
   }
 
-  public void stopVideo(GameObject playerContainer){
+  public void stopVideo(GameObject playerContainer) {
     extractPlayerComponents(playerContainer);
     videoPlayer.Stop();
   }
@@ -70,7 +69,7 @@ public class PlayerConfigurator
     //    real detrimental effects in other use cases, better safe than sorry. 
     videoPlayer.playOnAwake = true;
     source.playOnAwake = false;
-    
+
     videoPlayer.EnableAudioTrack(0, true);
     videoPlayer.SetTargetAudioSource(0, source);
     source.volume = 1.0f;
@@ -79,8 +78,8 @@ public class PlayerConfigurator
     videoPlayer.Prepare();
   }
 
-//  Summary: Configures the GameObject for displaying 360 video content appropriately
-//    via invertNormals and applying appropriate unlit texture via setUnlitTexture.
+  //  Summary: Configures the GameObject for displaying 360 video content appropriately
+  //    via invertNormals and applying appropriate unlit texture via setUnlitTexture.
   private void configureGameObjectFor360Content(GameObject mPlayerContainer) {
     // Note: Mesh is used as opposed to sharedMesh for the following reasons.
     //  - Instantiates a new mesh based on object and provides a reference to this
@@ -99,24 +98,23 @@ public class PlayerConfigurator
     mPlayerContainer.transform.localScale = new Vector3(-localScaleVector.x, localScaleVector.y, localScaleVector.z);
   }
 
-// Summary: Helper method that extract AudioSource and VideoPlayer
-//  GameObjects to be configured for 360 video playback.
+  // Summary: Helper method that extract AudioSource and VideoPlayer
+  //  GameObjects to be configured for 360 video playback.
   private void extractPlayerComponents(GameObject playerContainer) {
     source = playerContainer.GetComponent<AudioSource>();
     videoPlayer = playerContainer.GetComponent<VideoPlayer>();
   }
 
-// Summary: Event handler called when video player has finished
-//  preparing resources to play content.
-  private void prepareCompleted(VideoPlayer vp ) {
+  // Summary: Event handler called when video player has finished
+  //  preparing resources to play content.
+  private void prepareCompleted(VideoPlayer vp) {
     vp.Play();
     Debug.Log("Video should play");
   }
 
-// Summary: Ensure that project video on Sphere ( GameObject ) 
-//  ignores any in-game lighting effects using Unlit/Texture as base.
-  void setUnlitTexture(Renderer renderer)
-  {
+  // Summary: Ensure that project video on Sphere ( GameObject ) 
+  //  ignores any in-game lighting effects using Unlit/Texture as base.
+  void setUnlitTexture(Renderer renderer) {
     Texture2D tex = new Texture2D(1, 1);
     tex.SetPixel(0, 0, Color.clear);
     tex.Apply();
@@ -125,11 +123,10 @@ public class PlayerConfigurator
     renderer.material.mainTexture = tex;
   }
 
-// Summary: Invert normals of mesh within Sphere ( GameObject ) 
-//  to display video on inner geometric surface.
-  private void invertNormals(Mesh mesh)
-  {
-        // Based on ReverseNormals.cs from Joachim Ante here : http://wiki.unity3d.com/index.php/ReverseNormals
+  // Summary: Invert normals of mesh within Sphere ( GameObject ) 
+  //  to display video on inner geometric surface.
+  private void invertNormals(Mesh mesh) {
+    // Based on ReverseNormals.cs from Joachim Ante here : http://wiki.unity3d.com/index.php/ReverseNormals
     // Calculate normals
     Vector3[] normals = mesh.normals;
     for (int i = 0; i < normals.Length; i++)
@@ -137,11 +134,9 @@ public class PlayerConfigurator
     mesh.normals = normals;
 
     // Create triangles
-    for (int m = 0; m < mesh.subMeshCount; m++)
-    {
+    for (int m = 0; m < mesh.subMeshCount; m++) {
       int[] triangles = mesh.GetTriangles(m);
-      for (int i = 0; i < triangles.Length; i += 3)
-      {
+      for (int i = 0; i < triangles.Length; i += 3) {
         int temp = triangles[i + 0];
         triangles[i + 0] = triangles[i + 1];
         triangles[i + 1] = temp;
