@@ -16,7 +16,7 @@ public class PlayerConfigurator
     configureGameObjectFor360Content(playerContainer);
   }
 
-  public void playVideo(GameObject playerContainer, string _url)
+  public void initializeVideo(GameObject playerContainer, string _url)
   {
     extractPlayerComponents(playerContainer);
     prepareVideoPlayer(_url);
@@ -37,7 +37,7 @@ public class PlayerConfigurator
     source.Pause();
   }
 
-  public void resumeVideo(GameObject playerContainer) {
+  public void playVideo(GameObject playerContainer) {
     extractPlayerComponents(playerContainer);
     videoPlayer.Play();
   }
