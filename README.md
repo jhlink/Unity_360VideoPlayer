@@ -49,7 +49,7 @@ The project encapsulates different functions of the variant 360 video player int
            +-------v------+       |      +---------------+
            |              |       |      |  Video        |    +--------------+
            | MasterPlayer |<------------>|   Collection  |<-->|  Asset       |
-       --->|  Controller  |       |      |    Manager    |    |   Container  |
+        -->|  Controller  |       |      |    Manager    |    |   Container  |
            |              |       |      +---------------+    +--------------+
            +-------^------+       |
                    |              |
