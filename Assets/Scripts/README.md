@@ -6,7 +6,6 @@ The inspiration behind this project came after discovering that Unity's native v
 
 This Unity package attempts to create a simple, variant 360 Video Player that achieves the follow features:
 - Non-UI blocking, asynchronous downloads of video assets from URLs via Promises. 
-  - **Note**: Parallelized downloads have not been tested. 
 - "Normal Vector" inversion for view inside a primitive GameObject sphere.
 
 This library is primarily developed for mobile platforms. This has been tested on the Android, but untested on iOS devices. As a result, resource utilization / asset downloading are executed based on need. 
@@ -74,9 +73,17 @@ Any given video may be played by calling the following public function provided 
 
 `MasterPlayerController.playVideo(string videoFileName)`
 
+Videos can be stopped, paused, and resumed using the following commands that are exposed in the MasterPlayerController class.
+
+```
+MasterPlayerController.stopVideo()
+MasterPlayerController.pauseVideo()
+MasterPlayerController.resumeVideo()
+```
+
 While other videos are playing or actions are occurring, other video assets can be downloaded in the background by calling the following.
 
-`MasterPlayerController.loadVideo(string videoFileName)`
+`MasterPlayerController.queueVideoDownload(string videoFileName)`
 
 - **Note** Be sure to disable the 'Play Demo' flag within the Master Player Controller script. 
 
