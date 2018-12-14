@@ -72,7 +72,13 @@ public class MasterPlayerController : MonoBehaviour {
     downloader.progressChangedCallback += handleDownloadProgress;
   }
 
-  private void handleDownloadProgress(float progressPercentage, string assetFileName) {
-    Debug.Log(assetFileName + " progress percentage " + progressPercentage.ToString());
+  // Summary: A progress handler that reports the download progress of current asset
+  //  in queue. ProgressPercentage is an int value starting and ending at 0 and 100,
+  //  respectively. AssetDownloader will try to process all assets in the queue,
+  //  so the assetFileName is provided to identify the asset being downloaded.   
+  //  The developer is encouraged to modify the logic of this function to handle
+  //  functionality as needed. Note: The function header must remain unchanged. 
+  private void handleDownloadProgress(float progressValue, string assetFileName) {
+    Debug.Log(assetFileName + " progress percentage " + progressValue.ToString());
   }
 }
