@@ -65,9 +65,13 @@ public class MasterPlayerController : MonoBehaviour {
     playerConfigurator.playVideo(this.gameObject);
   }
 
-  private void startVideoPlayer(AssetContainer resultContainer) {
-    Debug.Log("Playing video : " + resultContainer.AssignedAssetFiledName);
+  public void initializeVideo(AssetContainer resultContainer) {
     playerConfigurator.initializeVideo(this.gameObject, resultContainer.AssetLocalFilePath);
+  }
+
+  private void initializeAndPlayVideo(AssetContainer resultContainer) {
+    Debug.Log("Playing video : " + resultContainer.AssignedAssetFiledName);
+    initializeVideo(resultContainer);
     playVideo();
   }
 
