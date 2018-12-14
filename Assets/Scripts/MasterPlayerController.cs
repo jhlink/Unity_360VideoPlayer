@@ -57,6 +57,10 @@ public class MasterPlayerController : MonoBehaviour {
     playerConfigurator.stopVideo(this.gameObject);
   }
 
+  public void pauseVideo() {
+    playerConfigurator.pauseVideo(this.gameObject);
+  }
+
   private void startVideoPlayer(AssetContainer resultContainer) {
     Debug.Log("Playing video : " + resultContainer.AssignedAssetFiledName);
     playerConfigurator.playVideo(this.gameObject, resultContainer.AssetLocalFilePath);
