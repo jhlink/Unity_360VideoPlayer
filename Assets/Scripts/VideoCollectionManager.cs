@@ -6,7 +6,7 @@ public class VideoCollectionManager : MonoBehaviour
 {
   public string[] videoID;
   public string[] videoUrls;
-
+  private bool debugMode = false;
   private Dictionary<string, AssetContainer> videoStringMap = new Dictionary<string, AssetContainer>();
 
   private void Start() {
@@ -48,7 +48,9 @@ public class VideoCollectionManager : MonoBehaviour
         AssetContainer assetContainer = new AssetContainer(videoUrlItem, videoFileName);
         videoStringMap.Add (videoFileName, assetContainer);
 
-        Debug.Log("Manager: " + videoFileName + " at URL " + videoStringMap[videoFileName] );
+        if ( debugMode ) {
+          Debug.Log("Manager: " + videoFileName + " at URL " + videoStringMap[videoFileName] );
+        }
       }
     }
   }
@@ -56,9 +58,13 @@ public class VideoCollectionManager : MonoBehaviour
   public AssetContainer getContainerWithKey(string key) {
     AssetContainer videoContainer = new AssetContainer();
     if ( videoStringMap.TryGetValue(key, out videoContainer) ) {
-      Debug.Log("Manager: Found " + key + " at Container:\n" + videoContainer.debugString());
+      if ( debugMode ) {
+        Debug.Log("Manager: Found " + key + " at Container:\n" + videoContainer.debugString());
+      }
     } else {
-      Debug.Log("Manager: Value for " + key + " not found");
+      if ( debugMode ) {
+        Debug.Log("Manager: Value for " + key + " not found");
+      }
     }
     return videoContainer;
   }
