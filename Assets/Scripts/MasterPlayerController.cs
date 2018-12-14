@@ -69,6 +69,8 @@ public class MasterPlayerController : MonoBehaviour {
     playerConfigurator.initializeVideo(this.gameObject, resultContainer.AssetLocalFilePath);
   }
 
+  //  Summary: This is a convenience method where a specified video is prepared ( initialized )
+  //    then played. It is important to initialize the video player with a video before playing.    
   private void initializeAndPlayVideo(AssetContainer resultContainer) {
     Debug.Log("Playing video : " + resultContainer.AssignedAssetFiledName);
     initializeVideo(resultContainer);
