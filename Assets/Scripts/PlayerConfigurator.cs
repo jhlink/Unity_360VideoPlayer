@@ -20,8 +20,12 @@ public class PlayerConfigurator
     extractPlayerComponents(playerContainer);
     prepareVideoPlayer(_url);
 
-    // Utilizing callbacks due to more reliable performance in comparison to
-    //  Coroutines, which seem to be less so. 
+    //  Utilizing callbacks due to more reliable performance in comparison to
+    //    Coroutines, which seem to be less so. 
+    //
+    //  The preparedCompleted eventHandler is being unregistered and registered
+    //    in order to ensure that the eventHandler is only set with one handler.
+    videoPlayer.prepareCompleted -= prepareCompleted;
     videoPlayer.prepareCompleted += prepareCompleted;
   }
 
