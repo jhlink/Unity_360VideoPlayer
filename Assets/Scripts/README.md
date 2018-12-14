@@ -87,6 +87,8 @@ While other videos are playing or actions are occurring, other video assets can 
 
 `MasterPlayerController.queueVideoDownload(string videoFileName)`
 
+Note that populating the VideoCollectionManager with more than one asset does not mean that they will be downloaded immediately. It is the developer's responsibility to explicitly enqueue the video using the functions exposed by the MasterPlayerController class.
+
 - **Note** Be sure to disable the 'Play Demo' flag within the Master Player Controller script. 
 
 The above functions only work for videos that are defined in the VideoCollectionManager script.
