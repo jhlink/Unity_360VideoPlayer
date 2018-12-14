@@ -34,7 +34,6 @@ public class PlayerConfigurator
   public void pauseVideo(GameObject playerContainer) {
     extractPlayerComponents(playerContainer);
     videoPlayer.Pause();
-    source.Pause();
   }
 
   public void playVideo(GameObject playerContainer) {
