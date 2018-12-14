@@ -42,6 +42,11 @@ public class MasterPlayerController : MonoBehaviour {
     return downloader.isAssetQueuedForDownload(ref resultContainer);
   }
 
+  //  Summary: When considering the flow of the program, playVideo must check
+  //    a number of conditions, initialize a priority queue download, and
+  //    play the video on completion. 
+  //    When resuming a video after a pause, the resumeVideo function should
+  //    be called instead of playVideo instead of redoing the aforementioned steps.
   public void playVideo(string videoName) {
     AssetContainer resultContainer = manager.getContainerWithKey(videoName);
 
